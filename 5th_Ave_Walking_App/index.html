@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>5th Ave Cul-de-Sac Stride Leaderboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --marcus-blue: #1e3a8a;
+      --marcus-light: #3b82f6;
+      --may-red: #991b1b;
+      --may-light: #ef4444;
+      --gold: #f59e0b;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
+    
+    /* Header */
+    header {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      padding: 24px 16px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .subtitle { font-size: 13px; color: var(--text-muted); }
+
+    /* Team Battle Bar */
+    .battle-card {
+      margin: 16px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid var(--card-border);
+    }
+    .battle-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .team-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .team-marcus { color: #60a5fa; }
+    .team-may { color: #f87171; }
+    .battle-bar-container {
+      height: 14px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      margin-bottom: 8px;
+    }
+    .bar-marcus { background: linear-gradient(90deg, #2563eb, #60a5fa); height: 100%; transition: width 0.4s ease; }
+    .bar-may { background: linear-gradient(90deg, #f87171, #dc2626); height: 100%; transition: width 0.4s ease; }
+    .battle-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Tabs */
+    .nav-tabs {
+      display: flex;
+      margin: 0 16px 16px;
+      background: #1e293b;
+      padding: 4px;
+      border-radius: 12px;
+      gap: 4px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: #334155;
+      color: #fff;
+    }
+
+    /* Leaderboard List */
+    .tab-content { padding: 0 16px; }
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .rank-num {
+      width: 28px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-right: 12px;
+      border: 2px solid transparent;
+    }
+    .avatar.marcus { background: rgba(37, 99, 235, 0.2); border-color: #3b82f6; }
+    .avatar.may { background: rgba(220, 38, 38, 0.2); border-color: #ef4444; }
+    .user-info { flex: 1; }
+    .user-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+    .user-team { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .score-block { text-align: right; }
+    .score-pts { font-size: 18px; font-weight: 800; color: #fff; }
+    .score-label { font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+
+    /* Check-In Modal / Form */
+    .checkin-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
+    select, input[type="text"], input[type="number"] {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .action-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+    }
+
+    /* Fixed Bottom Action */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 12px 16px;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">Richmond, VA • Est. 2026</div>
+    <h1>5th Ave Cul-de-Sac Stride</h1>
+    <p class="subtitle">6 Days A Week • Health, Fitness & Community</p>
+  </header>
+
+  <!-- Live Team Battle -->
+  <div class="battle-card">
+    <div class="battle-header">
+      <div class="team-badge team-marcus">🔵 Team Marcus: <span id="marcus-pts">0</span> pts</div>
+      <div class="team-badge team-may">🔴 Team May: <span id="may-pts">0</span> pts</div>
+    </div>
+    <div class="battle-bar-container">
+      <div id="bar-marcus" class="bar-marcus" style="width: 50%;"></div>
+      <div id="bar-may" class="bar-may" style="width: 50%;"></div>
+    </div>
+    <div class="battle-meta">
+      <span id="marcus-walkers">0 Walkers</span>
+      <span>WEEKLY CHALLENGE</span>
+      <span id="may-walkers">0 Walkers</span>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab('leaderboard')">🏆 Leaderboard</button>
+    <button class="tab-btn" onclick="showTab('log')">➕ Log A Stride</button>
+    <button class="tab-btn" onclick="showTab('feed')">💬 Stride Feed</button>
+  </div>
+
+  <!-- Tab 1: Leaderboard -->
+  <div id="tab-leaderboard" class="tab-content">
+    <div id="leaderboard-list"></div>
+  </div>
+
+  <!-- Tab 2: Log Walk -->
+  <div id="tab-log" class="tab-content" style="display: none;">
+    <div class="checkin-card">
+      <div class="form-group">
+        <label>Select Walker</label>
+        <select id="walker-select" onchange="autoFillTeam()">
+          <option value="Marcus">Marcus (Coach)</option>
+          <option value="May">May (CMO)</option>
+          <option value="Dr. C">Dr. C</option>
+          <option value="Jon">Jon</option>
+          <option value="Gromit">Gromit (K9 Mascot)</option>
+          <option value="+ New Neighbor">+ Add New Neighbor...</option>
+        </select>
+      </div>
+
+      <div id="custom-name-group" class="form-group" style="display: none;">
+        <label>Neighbor Name</label>
+        <input type="text" id="custom-name" placeholder="Enter neighbor name">
+      </div>
+
+      <div class="form-group">
+        <label>Team Selection</label>
+        <select id="walker-team">
+          <option value="Marcus">Team Marcus (Trainer Squad 🔵)</option>
+          <option value="May">Team May (Motivation Squad 🔴)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Activity Logged</label>
+        <select id="activity-type">
+          <option value="2">👟 Walk with Marcus & May (+2 pts)</option>
+          <option value="1">🚶 Solo Cul-de-Sac Loop (+1 pt)</option>
+          <option value="1">🐾 Dog Walk / Mailbox Loop (+1 pt)</option>
+          <option value="1">📣 Porch Cheer / Moral Support (+1 pt)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Laps / Loops Today</label>
+        <input type="number" id="laps-input" value="1" min="1" max="50">
+      </div>
+
+      <button class="action-btn" onclick="submitStride()">Submit Stride & Update Board</button>
+    </div>
+  </div>
+
+  <!-- Tab 3: Stride Feed -->
+  <div id="tab-feed" class="tab-content" style="display: none;">
+    <div id="feed-list"></div>
+  </div>
+
+  <script>
+    // Initial Seed Data
+    const defaultData = {
+      walkers: [
+        { name: "Marcus", team: "Marcus", points: 14, loops: 10, avatar: "🏋️", role: "Coach" },
+        { name: "May", team: "May", points: 16, loops: 12, avatar: "☀️", role: "CMO" },
+        { name: "Dr. C", team: "Marcus", points: 10, loops: 8, avatar: "📚", role: "Strategist" },
+        { name: "Jon", team: "May", points: 10, loops: 8, avatar: "🎯", role: "Pace Keeper" },
+        { name: "Gromit", team: "May", points: 8, loops: 6, avatar: "🐾", role: "K9 Mascot" }
+      ],
+      feed: [
+        { text: "Marcus logged 2 loops! Form looking sharp.", time: "Today 6:30 PM", author: "Marcus" },
+        { text: "May got 3 neighbors off their porches for the evening loop!", time: "Today 6:45 PM", author: "May" },
+        { text: "Gromit completed the mailbox patrol and greeted everyone.", time: "Today 7:00 PM", author: "Dr. C" }
+      ]
+    };
+
+    function loadData() {
+      const saved = localStorage.getItem('stride_data_v1');
+      return saved ? JSON.parse(saved) : defaultData;
+    }
+
+    function saveData(data) {
+      localStorage.setItem('stride_data_v1', JSON.stringify(data));
+      render();
+    }
+
+    function showTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+      if (tab === 'leaderboard') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('tab-leaderboard').style.display = 'block';
+      } else if (tab === 'log') {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('tab-log').style.display = 'block';
+      } else if (tab === 'feed') {
+        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        document.getElementById('tab-feed').style.display = 'block';
+      }
+    }
+
+    function autoFillTeam() {
+      const sel = document.getElementById('walker-select').value;
+      const customGroup = document.getElementById('custom-name-group');
+      if (sel === '+ New Neighbor') {
+        customGroup.style.display = 'block';
+      } else {
+        customGroup.style.display = 'none';
+        const data = loadData();
+        const found = data.walkers.find(w => w.name === sel);
+        if (found) {
+          document.getElementById('walker-team').value = found.team;
+        }
+      }
+    }
+
+    function submitStride() {
+      const data = loadData();
+      let name = document.getElementById('walker-select').value;
+      if (name === '+ New Neighbor') {
+        name = document.getElementById('custom-name').value.trim();
+        if (!name) return alert('Please enter neighbor name');
+      }
+      const team = document.getElementById('walker-team').value;
+      const ptsPerLap = parseInt(document.getElementById('activity-type').value);
+      const laps = parseInt(document.getElementById('laps-input').value) || 1;
+      const earned = ptsPerLap * laps;
+
+      let walker = data.walkers.find(w => w.name === name);
+      if (!walker) {
+        walker = { name, team, points: 0, loops: 0, avatar: team === 'Marcus' ? '👟' : '🔥', role: 'Neighbor' };
+        data.walkers.push(walker);
+      }
+      walker.points += earned;
+      walker.loops += laps;
+      walker.team = team;
+
+      data.feed.unshift({
+        text: `${name} logged ${laps} loop(s) for Team ${team}! (+${earned} pts)`,
+        time: "Just now",
+        author: name
+      });
+
+      saveData(data);
+      showTab('leaderboard');
+    }
+
+    function render() {
+      const data = loadData();
+      
+      // Calculate Team Totals
+      let marcusPts = 0, mayPts = 0, marcusCount = 0, mayCount = 0;
+      data.walkers.forEach(w => {
+        if (w.team === 'Marcus') { marcusPts += w.points; marcusCount++; }
+        else { mayPts += w.points; mayCount++; }
+      });
+
+      document.getElementById('marcus-pts').textContent = marcusPts;
+      document.getElementById('may-pts').textContent = mayPts;
+      document.getElementById('marcus-walkers').textContent = `${marcusCount} Walkers`;
+      document.getElementById('may-walkers').textContent = `${mayCount} Walkers`;
+
+      const total = (marcusPts + mayPts) || 1;
+      const marcusPct = Math.round((marcusPts / total) * 100);
+      document.getElementById('bar-marcus').style.width = marcusPct + '%';
+      document.getElementById('bar-may').style.width = (100 - marcusPct) + '%';
+
+      // Sort Leaderboard
+      const sorted = [...data.walkers].sort((a, b) => b.points - a.points);
+      const listEl = document.getElementById('leaderboard-list');
+      listEl.innerHTML = '';
+
+      sorted.forEach((w, idx) => {
+        const item = document.createElement('div');
+        item.className = 'leaderboard-item';
+        const teamClass = w.team.toLowerCase();
+        item.innerHTML = `
+          <div class="rank-num">#${idx + 1}</div>
+          <div class="avatar ${teamClass}">${w.avatar || '👟'}</div>
+          <div class="user-info">
+            <div class="user-name">${w.name} ${idx === 0 ? '👑' : ''}</div>
+            <div class="user-team team-${teamClass}">Team ${w.team} • ${w.role || 'Walker'}</div>
+          </div>
+          <div class="score-block">
+            <div class="score-pts">${w.points}</div>
+            <div class="score-label">${w.loops} loops</div>
+          </div>
+        `;
+        listEl.appendChild(item);
+      });
+
+      // Render Feed
+      const feedEl = document.getElementById('feed-list');
+      feedEl.innerHTML = '';
+      data.feed.slice(0, 15).forEach(f => {
+        const fItem = document.createElement('div');
+        fItem.className = 'leaderboard-item';
+        fItem.innerHTML = `
+          <div class="avatar marcus">💬</div>
+          <div class="user-info">
+            <div class="user-name" style="font-size: 13px; font-weight: 600;">${f.text}</div>
+            <div class="subtitle" style="font-size: 11px;">${f.time}</div>
+          </div>
+        `;
+        feedEl.appendChild(fItem);
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>
