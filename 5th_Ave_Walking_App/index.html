@@ -4,446 +4,637 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>5th Ave Cul-de-Sac Stride Leaderboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0d1b2a">
+  <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/running.png">
   <style>
     :root {
-      --marcus-blue: #1e3a8a;
-      --marcus-light: #3b82f6;
-      --may-red: #991b1b;
-      --may-light: #ef4444;
-      --gold: #f59e0b;
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --card-border: #334155;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
+      --bg: #0d1b2a;
+      --card-bg: #1b263b;
+      --accent-marcus: #1e3d59;
+      --accent-gold: #ffc107;
+      --accent-may: #e07a5f;
+      --accent-green: #10b981;
+      --accent-green-bright: #34d399;
+      --text: #e0e1dd;
+      --text-muted: #8d99ae;
+      --border: #415a77;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 75px; -webkit-tap-highlight-color: transparent; }
+    header { background: linear-gradient(135deg, #1b263b, #0d1b2a); padding: 18px 16px 14px; text-align: center; border-bottom: 1px solid var(--border); }
+    header h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.5px; color: var(--accent-gold); text-transform: uppercase; }
+    header p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
     
-    /* Header */
-    header {
-      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-      padding: 24px 16px 16px;
-      text-align: center;
-      border-bottom: 1px solid var(--card-border);
-    }
-    .badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--gold);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      margin-bottom: 8px;
-    }
-    h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      line-height: 1.2;
-      margin-bottom: 6px;
-    }
-    .subtitle { font-size: 13px; color: var(--text-muted); }
+    .nav-tabs { display: flex; background: #14213d; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .nav-btn { flex: 1; padding: 12px 6px; text-align: center; font-size: 0.82rem; font-weight: 700; color: var(--text-muted); background: none; border: none; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; }
+    .nav-btn.active { color: var(--accent-gold); border-bottom-color: var(--accent-gold); background: rgba(255, 193, 7, 0.05); }
 
-    /* Team Battle Bar */
-    .battle-card {
-      margin: 16px;
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 16px;
-      border: 1px solid var(--card-border);
-    }
-    .battle-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .team-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-    .team-marcus { color: #60a5fa; }
-    .team-may { color: #f87171; }
-    .battle-bar-container {
-      height: 14px;
-      background: rgba(0,0,0,0.4);
-      border-radius: 999px;
-      overflow: hidden;
-      display: flex;
-      margin-bottom: 8px;
-    }
-    .bar-marcus { background: linear-gradient(90deg, #2563eb, #60a5fa); height: 100%; transition: width 0.4s ease; }
-    .bar-may { background: linear-gradient(90deg, #f87171, #dc2626); height: 100%; transition: width 0.4s ease; }
-    .battle-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
+    .container { max-width: 520px; margin: 0 auto; padding: 14px; }
+    .sub-toggle { display: flex; background: #14213d; border-radius: 10px; padding: 4px; margin-bottom: 14px; border: 1px solid var(--border); }
+    .sub-btn { flex: 1; padding: 8px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); background: none; border: none; border-radius: 7px; cursor: pointer; transition: all 0.2s; }
+    .sub-btn.active { background: var(--card-bg); color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .sub-btn.active.green-active { background: #064e3b; color: var(--accent-green-bright); border: 1px solid var(--accent-green); }
 
-    /* Tabs */
-    .nav-tabs {
-      display: flex;
-      margin: 0 16px 16px;
-      background: #1e293b;
-      padding: 4px;
-      border-radius: 12px;
-      gap: 4px;
-    }
-    .tab-btn {
-      flex: 1;
-      padding: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-muted);
-      border: none;
-      background: transparent;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .tab-btn.active {
-      background: #334155;
-      color: #fff;
-    }
+    .card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; margin-bottom: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+    .card.green-card { border-color: rgba(16, 185, 129, 0.4); background: linear-gradient(180deg, #132a26, #1b263b); }
+    .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
 
-    /* Leaderboard List */
-    .tab-content { padding: 0 16px; }
-    .leaderboard-item {
-      display: flex;
-      align-items: center;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 12px 14px;
-      margin-bottom: 10px;
-    }
-    .rank-num {
-      width: 28px;
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--gold);
-    }
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      margin-right: 12px;
-      border: 2px solid transparent;
-    }
-    .avatar.marcus { background: rgba(37, 99, 235, 0.2); border-color: #3b82f6; }
-    .avatar.may { background: rgba(220, 38, 38, 0.2); border-color: #ef4444; }
-    .user-info { flex: 1; }
-    .user-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
-    .user-team { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-    .score-block { text-align: right; }
-    .score-pts { font-size: 18px; font-weight: 800; color: #fff; }
-    .score-label { font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+    /* Team Cup */
+    .cup-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 800; font-size: 0.9rem; }
+    .team-marcus { color: #63b3ed; }
+    .team-may { color: var(--accent-may); }
+    .progress-bar-wrap { height: 20px; background: var(--bg); border-radius: 10px; overflow: hidden; display: flex; border: 1px solid var(--border); margin-bottom: 10px; }
+    .progress-marcus { background: linear-gradient(90deg, #3182ce, #63b3ed); height: 100%; transition: width 0.3s; }
+    .progress-may { background: linear-gradient(90deg, #e07a5f, #f6ad55); height: 100%; transition: width 0.3s; }
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .team-box { padding: 10px; border-radius: 8px; text-align: center; }
+    .team-box.m { background: rgba(49, 130, 206, 0.15); border: 1px solid #3182ce; }
+    .team-box.y { background: rgba(224, 122, 95, 0.15); border: 1px solid #e07a5f; }
+    .stat-num { font-size: 1.5rem; font-weight: 800; margin-top: 2px; }
+    .stat-lbl { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* Check-In Modal / Form */
-    .checkin-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-    .form-group { margin-bottom: 14px; }
-    label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
-    select, input[type="text"], input[type="number"] {
-      width: 100%;
-      background: #0f172a;
-      border: 1px solid var(--card-border);
-      color: #fff;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .action-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      color: #fff;
-      border: none;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
-    }
+    /* Individual List (GREEN THEMED) */
+    .sort-pills { display: flex; gap: 6px; margin-bottom: 10px; }
+    .sort-pill { flex: 1; padding: 7px 4px; font-size: 0.75rem; font-weight: 700; background: #14213d; border: 1px solid var(--border); border-radius: 6px; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.2s; }
+    .sort-pill.active { background: var(--accent-green); color: #0d1b2a; border-color: var(--accent-green-bright); font-weight: 800; box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
 
-    /* Fixed Bottom Action */
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 12px 16px;
-      border-top: 1px solid var(--card-border);
-      display: flex;
-      gap: 10px;
-    }
+    .walker-row { display: flex; align-items: center; padding: 11px 8px; border-bottom: 1px solid rgba(16, 185, 129, 0.12); }
+    .walker-row:last-child { border-bottom: none; }
+    .rank-badge { width: 28px; font-size: 1rem; font-weight: 800; text-align: center; margin-right: 6px; color: var(--accent-green-bright); }
+    .avatar { font-size: 1.5rem; margin-right: 10px; }
+    .walker-info { flex: 1; }
+    .walker-name { font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .walker-role { font-size: 0.72rem; color: var(--text-muted); }
+    .walker-score { text-align: right; }
+    .score-pts { font-size: 1.25rem; font-weight: 800; color: var(--accent-green-bright); text-shadow: 0 0 8px rgba(16, 185, 129, 0.3); }
+    .score-detail { font-size: 0.72rem; color: #a7f3d0; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    
+    .scope-btn { flex: 1; padding: 8px 6px; font-size: 0.78rem; font-weight: 800; border-radius: 8px; border: 1px solid var(--border); background: #14213d; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.2s; }
+    .scope-btn.active { background: #ffc107; color: #0d1b2a; border-color: #ffc107; box-shadow: 0 0 10px rgba(255, 193, 7, 0.3); }
+
+    /* Form */
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: var(--text-muted); text-transform: uppercase; }
+    select, input { width: 100%; padding: 12px; background: #14213d; border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 1rem; outline: none; }
+    select:focus, input:focus { border-color: var(--accent-green); }
+    .type-toggle { display: flex; gap: 8px; margin-bottom: 12px; }
+    .type-btn { flex: 1; padding: 10px; font-size: 0.85rem; font-weight: 700; background: #14213d; border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted); cursor: pointer; text-align: center; }
+    .type-btn.active { background: var(--accent-green); color: #0d1b2a; border-color: var(--accent-green); }
+    .btn-submit { width: 100%; padding: 14px; background: linear-gradient(135deg, #10b981, #34d399); border: none; border-radius: 8px; font-size: 1rem; font-weight: 800; color: #064e3b; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+
+    /* Feed */
+    .feed-item { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.85rem; }
+    .feed-item:last-child { border-bottom: none; }
+    .feed-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; display: flex; justify-content: space-between; }
+
+    .reset-btn { background: none; border: 1px solid #e53e3e; color: #e53e3e; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; margin-top: 15px; display: block; width: 100%; text-align: center; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="badge">Richmond, VA • Est. 2026</div>
-    <h1>5th Ave Cul-de-Sac Stride</h1>
-    <p class="subtitle">6 Days A Week • Health, Fitness & Community</p>
+    <h1>5th Ave Stride League</h1>
+    <p>Cul-de-Sac Walking Club &bull; Season 1</p>
   </header>
 
-  <!-- Live Team Battle -->
-  <div class="battle-card">
-    <div class="battle-header">
-      <div class="team-badge team-marcus">🔵 Team Marcus: <span id="marcus-pts">0</span> pts</div>
-      <div class="team-badge team-may">🔴 Team May: <span id="may-pts">0</span> pts</div>
-    </div>
-    <div class="battle-bar-container">
-      <div id="bar-marcus" class="bar-marcus" style="width: 50%;"></div>
-      <div id="bar-may" class="bar-may" style="width: 50%;"></div>
-    </div>
-    <div class="battle-meta">
-      <span id="marcus-walkers">0 Walkers</span>
-      <span>WEEKLY CHALLENGE</span>
-      <span id="may-walkers">0 Walkers</span>
-    </div>
-  </div>
-
-  <!-- Navigation Tabs -->
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="showTab('leaderboard')">🏆 Leaderboard</button>
-    <button class="tab-btn" onclick="showTab('log')">➕ Log A Stride</button>
-    <button class="tab-btn" onclick="showTab('feed')">💬 Stride Feed</button>
+    <button class="nav-btn active" onclick="switchNav('dash')">📊 Leaderboard</button>
+    <button class="nav-btn" onclick="switchNav('log')">➕ Log Activity</button>
+    <button class="nav-btn" onclick="switchNav('feed')">💬 Club Feed</button>
   </div>
 
-  <!-- Tab 1: Leaderboard -->
-  <div id="tab-leaderboard" class="tab-content">
-    <div id="leaderboard-list"></div>
-  </div>
+  <div class="container">
 
-  <!-- Tab 2: Log Walk -->
-  <div id="tab-log" class="tab-content" style="display: none;">
-    <div class="checkin-card">
-      <div class="form-group">
-        <label>Select Walker</label>
-        <select id="walker-select" onchange="autoFillTeam()">
-          <option value="Marcus">Marcus (Coach)</option>
-          <option value="May">May (CMO)</option>
-          <option value="Dr. C">Dr. C</option>
-          <option value="Jon">Jon</option>
-          <option value="Gromit">Gromit (K9 Mascot)</option>
-          <option value="+ New Neighbor">+ Add New Neighbor...</option>
-        </select>
+    <!-- DASHBOARD VIEW -->
+    <div id="view-dash">
+      
+      <!-- TIME SCOPE TOGGLE (OPTION 2) -->
+      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <button class="scope-btn active" id="scope-week" onclick="setScope('week')">📅 This Week (Resets Sun)</button>
+        <button class="scope-btn" id="scope-all" onclick="setScope('all')">🌟 All-Time Season</button>
+      </div>
+      <div class="sub-toggle">
+        <button class="sub-btn active" id="btn-sub-team" onclick="switchSub('team')">🏆 Team Cup</button>
+        <button class="sub-btn" id="btn-sub-indiv" onclick="switchSub('indiv')">🟢 Individual Rankings</button>
       </div>
 
-      <div id="custom-name-group" class="form-group" style="display: none;">
-        <label>Neighbor Name</label>
-        <input type="text" id="custom-name" placeholder="Enter neighbor name">
+      <!-- TEAM CUP VIEW -->
+      <div id="dash-team">
+        <div class="card">
+          <div class="cup-header">
+            <span class="team-marcus">TEAM MARCUS</span>
+            <span class="team-may">TEAM MAY</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div id="bar-marcus" class="progress-marcus" style="width: 50%;"></div>
+            <div id="bar-may" class="progress-may" style="width: 50%;"></div>
+          </div>
+          <div class="team-grid">
+            <div class="team-box m">
+              <div class="stat-lbl">Points &bull; Loops</div>
+              <div id="score-marcus" class="stat-num team-marcus">0</div>
+              <div id="detail-marcus" class="stat-lbl">0 loops &bull; 0 steps</div>
+            </div>
+            <div class="team-box y">
+              <div class="stat-lbl">Points &bull; Loops</div>
+              <div id="score-may" class="stat-num team-may">0</div>
+              <div id="detail-may" class="stat-lbl">0 loops &bull; 0 steps</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Neighborhood Impact</div>
+          <div style="display: flex; justify-content: space-around; text-align: center; padding: 6px 0;">
+            <div>
+              <div id="stat-total-loops" style="font-size: 1.4rem; font-weight: 800; color: #fff;">0</div>
+              <div class="stat-lbl">Cul-de-Sac Loops</div>
+            </div>
+            <div>
+              <div id="stat-total-miles" style="font-size: 1.4rem; font-weight: 800; color: var(--accent-gold);">0.0</div>
+              <div class="stat-lbl">Total Miles</div>
+            </div>
+            <div>
+              <div id="stat-total-steps" style="font-size: 1.4rem; font-weight: 800; color: var(--accent-green-bright);">0</div>
+              <div class="stat-lbl">Total Steps</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Team Selection</label>
-        <select id="walker-team">
-          <option value="Marcus">Team Marcus (Trainer Squad 🔵)</option>
-          <option value="May">Team May (Motivation Squad 🔴)</option>
-        </select>
+      <!-- INDIVIDUAL STANDINGS VIEW (GREEN THEMED) -->
+      <div id="dash-indiv" style="display: none;">
+        <div class="sort-pills">
+          <div class="sort-pill active" id="sort-points" onclick="setSort('points')">⚡ By Points</div>
+          <div class="sort-pill" id="sort-steps" onclick="setSort('steps')">👟 By Steps</div>
+          <div class="sort-pill" id="sort-loops" onclick="setSort('loops')">🔄 By Loops</div>
+        </div>
+        <div class="card green-card">
+          <div class="card-title" style="color: var(--accent-green-bright);">
+            <span>Individual Leaderboard</span>
+            <span style="font-size: 0.72rem; color: #a7f3d0; font-weight: normal;">Live Season 1</span>
+          </div>
+          <div id="walker-list"></div>
+        </div>
       </div>
-
-      <div class="form-group">
-        <label>Activity Logged</label>
-        <select id="activity-type">
-          <option value="2">👟 Walk with Marcus & May (+2 pts)</option>
-          <option value="1">🚶 Solo Cul-de-Sac Loop (+1 pt)</option>
-          <option value="1">🐾 Dog Walk / Mailbox Loop (+1 pt)</option>
-          <option value="1">📣 Porch Cheer / Moral Support (+1 pt)</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Laps / Loops Today</label>
-        <input type="number" id="laps-input" value="1" min="1" max="50">
-      </div>
-
-      <button class="action-btn" onclick="submitStride()">Submit Stride & Update Board</button>
     </div>
-  </div>
 
-  <!-- Tab 3: Stride Feed -->
-  <div id="tab-feed" class="tab-content" style="display: none;">
-    <div id="feed-list"></div>
+    <!-- LOG ACTIVITY VIEW -->
+    <div id="view-log" style="display: none;">
+      <div class="card">
+        <div class="card-title">Record Your Hustle</div>
+        <div class="type-toggle" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
+          <div class="type-btn active" id="type-loops" onclick="setLogType('loops')">✍️ Manual Loops<br><span style="font-size:0.68rem; font-weight:normal;">Type loops</span></div>
+          <div class="type-btn" id="type-gps" onclick="setLogType('gps')">🛰️ GPS Live Walk<br><span style="font-size:0.68rem; font-weight:normal;">Auto-counts laps</span></div>
+          <div class="type-btn" id="type-steps" onclick="setLogType('steps')">👟 Daily Steps<br><span style="font-size:0.68rem; font-weight:normal;">1k steps = 1 pt</span></div>
+        </div>
+
+        <div class="form-group">
+          <label>Select Walker</label>
+          <select id="input-walker" onchange="checkNewWalker(this.value)">
+            <option value="Marcus">Marcus (Coach)</option>
+            <option value="May">May (CMO)</option>
+            <option value="Dr. C">Dr. C (Strategist)</option>
+            <option value="Jon">Jon (Pace Keeper)</option>
+            <option value="Lula Ditu">Lula Ditu (Neighbor)</option>
+            <option value="Dae">Dae (Neighbor)</option>
+            <option value="Gromit">Gromit (K9 Mascot)</option>
+            <option value="__new__">➕ Add New Walker / Enter Name...</option>
+          </select>
+          <div id="new-walker-box" style="display: none; background: #1b263b; border: 1px solid var(--accent-gold); border-radius: 8px; padding: 10px; margin-top: 8px;">
+            <label style="color: var(--accent-gold);">New Walker Name:</label>
+            <input type="text" id="new-walker-name" placeholder="Enter full name" style="margin-bottom: 8px;">
+            <label style="color: var(--accent-gold);">Select Team:</label>
+            <select id="new-walker-team">
+              <option value="Marcus">Team Marcus</option>
+              <option value="May">Team May</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" id="group-loops">
+          <label>Loops Walked</label>
+          <input type="number" id="input-loops" min="1" value="2" placeholder="e.g. 2 or 5 loops">
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">1 cul-de-sac loop ≈ 0.12 miles. 8 loops ≈ 1 mile.</div>
+        </div>
+
+        
+        <!-- GPS LIVE TRACKER BLOCK -->
+        <div id="group-gps" style="display: none; background: #064e3b; border: 1px solid #10b981; border-radius: 10px; padding: 14px; margin-bottom: 14px; text-align: center;">
+          <div style="font-size: 0.85rem; font-weight: 800; color: #34d399; text-transform: uppercase;">Live Cul-de-Sac GPS Tracker</div>
+          <div style="font-size: 0.72rem; color: #a7f3d0; margin-top: 2px;">Put phone in pocket — detects loops as you circle the street!</div>
+          
+          <div style="display: flex; justify-content: space-around; margin: 12px 0;">
+            <div>
+              <div id="gps-loops-count" style="font-size: 2rem; font-weight: 800; color: #fff;">0</div>
+              <div style="font-size: 0.7rem; color: #a7f3d0;">LOOPS COMPLETED</div>
+            </div>
+            <div>
+              <div id="gps-distance" style="font-size: 2rem; font-weight: 800; color: #ffc107;">0.00</div>
+              <div style="font-size: 0.7rem; color: #a7f3d0;">MILES</div>
+            </div>
+            <div>
+              <div id="gps-timer" style="font-size: 2rem; font-weight: 800; color: #63b3ed;">00:00</div>
+              <div style="font-size: 0.7rem; color: #a7f3d0;">TIME</div>
+            </div>
+          </div>
+
+          <button id="btn-gps-start" onclick="toggleGpsTracking()" style="width: 100%; padding: 12px; background: #10b981; border: none; border-radius: 8px; font-weight: 800; color: #064e3b; cursor: pointer; text-transform: uppercase;">🟢 Start GPS Walk</button>
+          <div id="gps-status" style="font-size: 0.72rem; color: #a7f3d0; margin-top: 6px;">GPS Standby</div>
+        </div>
+
+        <div class="form-group" id="group-steps" style="display: none;">
+          <label>Steps From Phone / Watch</label>
+          <input type="number" id="input-steps" min="100" step="500" value="5000" placeholder="e.g. 7500">
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Check Apple Health, Google Fit, or Samsung Health.</div>
+        </div>
+
+        <div class="form-group">
+          <label>Hype Note / Shoutout (Optional)</label>
+          <input type="text" id="input-note" placeholder="e.g. Evening walk in the books!">
+        </div>
+
+        <button class="btn-submit" onclick="submitLog()">Log Points &bull; Update Board</button>
+      </div>
+
+      <button class="reset-btn" onclick="resetAll()">⚠️ Reset Season to Zero</button>
+    </div>
+
+    <!-- CLUB FEED VIEW -->
+    <div id="view-feed" style="display: none;">
+      <div class="card">
+        <div class="card-title">Club Activity & Trash Talk</div>
+        <div id="feed-list"></div>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    // Initial Seed Data
-    const defaultData = {
-      walkers: [
-        { name: "Marcus", team: "Marcus", points: 14, loops: 10, avatar: "🏋️", role: "Coach" },
-        { name: "May", team: "May", points: 16, loops: 12, avatar: "☀️", role: "CMO" },
-        { name: "Dr. C", team: "Marcus", points: 10, loops: 8, avatar: "📚", role: "Strategist" },
-        { name: "Jon", team: "May", points: 10, loops: 8, avatar: "🎯", role: "Pace Keeper" },
-        { name: "Gromit", team: "May", points: 8, loops: 6, avatar: "🐾", role: "K9 Mascot" }
-      ],
-      feed: [
-        { text: "Marcus logged 2 loops! Form looking sharp.", time: "Today 6:30 PM", author: "Marcus" },
-        { text: "May got 3 neighbors off their porches for the evening loop!", time: "Today 6:45 PM", author: "May" },
-        { text: "Gromit completed the mailbox patrol and greeted everyone.", time: "Today 7:00 PM", author: "Dr. C" }
-      ]
-    };
+    const STORAGE_KEY = 'stride_data_v2';
+    let currentSort = 'points';
 
-    function loadData() {
-      const saved = localStorage.getItem('stride_data_v1');
-      return saved ? JSON.parse(saved) : defaultData;
-    }
+    let currentScope = 'week'; // 'week' or 'all'
 
-    function saveData(data) {
-      localStorage.setItem('stride_data_v1', JSON.stringify(data));
+    function setScope(scope) {
+      currentScope = scope;
+      document.getElementById('scope-week').classList.toggle('active', scope === 'week');
+      document.getElementById('scope-all').classList.toggle('active', scope === 'all');
       render();
     }
 
-    function showTab(tab) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-      if (tab === 'leaderboard') {
-        document.querySelectorAll('.tab-btn')[0].classList.add('active');
-        document.getElementById('tab-leaderboard').style.display = 'block';
-      } else if (tab === 'log') {
-        document.querySelectorAll('.tab-btn')[1].classList.add('active');
-        document.getElementById('tab-log').style.display = 'block';
-      } else if (tab === 'feed') {
-        document.querySelectorAll('.tab-btn')[2].classList.add('active');
-        document.getElementById('tab-feed').style.display = 'block';
+    let currentLogType = 'loops';
+
+    const defaultState = {
+      walkers: [
+        { name: "Marcus", team: "Marcus", points: 0, loops: 0, steps: 0, avatar: "🏋️", role: "Coach" },
+        { name: "May", team: "May", points: 0, loops: 0, steps: 0, avatar: "☀️", role: "CMO" },
+        { name: "Dr. C", team: "Marcus", points: 0, loops: 0, steps: 0, avatar: "📚", role: "Strategist" },
+        { name: "Jon", team: "May", points: 0, loops: 0, steps: 0, avatar: "🎯", role: "Pace Keeper" },
+        { name: "Gromit", team: "May", points: 0, loops: 0, steps: 0, avatar: "🐾", role: "K9 Mascot" }
+      ],
+      feed: [
+        { text: "Welcome to Season 1 of the 5th Ave Stride League! Team Marcus vs Team May is officially live.", time: "Season Kickoff", author: "Coach Marcus" }
+      ]
+    };
+
+    function getWeekId(d = new Date()) {
+      const date = new Date(d);
+      const day = date.getDay(); // 0 is Sunday
+      const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Monday start
+      const monday = new Date(date.setDate(diff));
+      return monday.toISOString().slice(0, 10);
+    }
+
+    function checkWeeklyReset(state) {
+      const currentWeek = getWeekId();
+      if (!state.activeWeek) {
+        state.activeWeek = currentWeek;
+        return state;
+      }
+      if (state.activeWeek !== currentWeek) {
+        let mPts = 0, yPts = 0;
+        state.walkers.forEach(w => {
+          if (w.team === 'Marcus') mPts += (w.points || 0);
+          else yPts += (w.points || 0);
+        });
+        const champ = mPts > yPts ? "Team Marcus 🏆" : (yPts > mPts ? "Team May 🏆" : "A Tie 🤝");
+        state.lastWinner = champ + " (" + Math.max(mPts, yPts) + " pts)";
+        state.feed.unshift({
+          text: "🔔 WEEK COMPLETE (Midnight Sunday Reset)! Last Week's Winner: " + state.lastWinner + ". Scores are reset to 0 for a brand new week!",
+          time: "Sunday Midnight",
+          author: "League Official"
+        });
+        state.walkers.forEach(w => {
+          w.points = 0;
+          w.loops = 0;
+          w.steps = 0;
+        });
+        state.activeWeek = currentWeek;
+      }
+      return state;
+    }
+
+    function getState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      let state = defaultState;
+      if (saved) {
+        try { state = JSON.parse(saved); } catch(e) { state = defaultState; }
+      }
+      return checkWeeklyReset(state);
+    }
+
+    function saveState(state) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      render();
+    }
+
+    function switchNav(view) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('view-dash').style.display = 'none';
+      document.getElementById('view-log').style.display = 'none';
+      document.getElementById('view-feed').style.display = 'none';
+
+      if (view === 'dash') {
+        document.querySelectorAll('.nav-btn')[0].classList.add('active');
+        document.getElementById('view-dash').style.display = 'block';
+      } else if (view === 'log') {
+        document.querySelectorAll('.nav-btn')[1].classList.add('active');
+        document.getElementById('view-log').style.display = 'block';
+      } else if (view === 'feed') {
+        document.querySelectorAll('.nav-btn')[2].classList.add('active');
+        document.getElementById('view-feed').style.display = 'block';
       }
     }
 
-    function autoFillTeam() {
-      const sel = document.getElementById('walker-select').value;
-      const customGroup = document.getElementById('custom-name-group');
-      if (sel === '+ New Neighbor') {
-        customGroup.style.display = 'block';
+    function switchSub(tab) {
+      document.querySelectorAll('.sub-btn').forEach(b => {
+        b.classList.remove('active');
+        b.classList.remove('green-active');
+      });
+      if (tab === 'team') {
+        document.getElementById('btn-sub-team').classList.add('active');
+        document.getElementById('dash-team').style.display = 'block';
+        document.getElementById('dash-indiv').style.display = 'none';
       } else {
-        customGroup.style.display = 'none';
-        const data = loadData();
-        const found = data.walkers.find(w => w.name === sel);
-        if (found) {
-          document.getElementById('walker-team').value = found.team;
+        const indivBtn = document.getElementById('btn-sub-indiv');
+        indivBtn.classList.add('active');
+        indivBtn.classList.add('green-active');
+        document.getElementById('dash-team').style.display = 'none';
+        document.getElementById('dash-indiv').style.display = 'block';
+      }
+    }
+
+    function setSort(criterion) {
+      currentSort = criterion;
+      document.querySelectorAll('.sort-pill').forEach(p => p.classList.remove('active'));
+      document.getElementById('sort-' + criterion).classList.add('active');
+      renderIndividual();
+    }
+
+    
+    function checkNewWalker(val) {
+      document.getElementById('new-walker-box').style.display = (val === '__new__') ? 'block' : 'none';
+    }
+
+    function setLogType(type) {
+      currentLogType = type;
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('type-' + type).classList.add('active');
+      document.getElementById('group-loops').style.display = (type === 'loops') ? 'block' : 'none';
+      document.getElementById('group-gps').style.display = (type === 'gps') ? 'block' : 'none';
+      document.getElementById('group-steps').style.display = (type === 'steps') ? 'block' : 'none';
+    }
+
+    let gpsWatchId = null;
+    let gpsStartTime = null;
+    let gpsTimerInterval = null;
+    let gpsTotalDistance = 0; // meters
+    let gpsLastCoord = null;
+    let gpsLoopsDetected = 0;
+
+    function toggleGpsTracking() {
+      if (gpsWatchId) {
+        // Stop GPS
+        navigator.geolocation.clearWatch(gpsWatchId);
+        clearInterval(gpsTimerInterval);
+        gpsWatchId = null;
+        document.getElementById('btn-gps-start').innerText = "🟢 Start GPS Walk";
+        document.getElementById('btn-gps-start').style.background = "#10b981";
+        document.getElementById('gps-status').innerText = "Walk finished! Ready to submit points.";
+        // Automatically populate input-loops
+        document.getElementById('input-loops').value = Math.max(1, gpsLoopsDetected);
+      } else {
+        // Start GPS
+        if (!navigator.geolocation) return alert("GPS is not supported by your browser.");
+        gpsTotalDistance = 0;
+        gpsLastCoord = null;
+        gpsLoopsDetected = 0;
+        document.getElementById('gps-loops-count').innerText = "0";
+        document.getElementById('gps-distance').innerText = "0.00";
+        gpsStartTime = Date.now();
+        gpsTimerInterval = setInterval(updateGpsTimer, 1000);
+
+        document.getElementById('btn-gps-start').innerText = "🔴 Finish Walk & Bank Points";
+        document.getElementById('btn-gps-start').style.background = "#e53e3e";
+        document.getElementById('btn-gps-start').style.color = "#fff";
+        document.getElementById('gps-status').innerText = "📡 Tracking GPS active...";
+
+        gpsWatchId = navigator.geolocation.watchPosition(handleGpsPosition, handleGpsError, {
+          enableHighAccuracy: true,
+          maximumAge: 1000
+        });
+      }
+    }
+
+    function updateGpsTimer() {
+      const elapsed = Math.floor((Date.now() - gpsStartTime) / 1000);
+      const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+      const secs = String(elapsed % 60).padStart(2, '0');
+      document.getElementById('gps-timer').innerText = mins + ":" + secs;
+    }
+
+    function handleGpsPosition(pos) {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      if (gpsLastCoord) {
+        const d = calcDistance(gpsLastCoord.lat, gpsLastCoord.lon, lat, lon);
+        if (d > 3) { // filter noise
+          gpsTotalDistance += d;
+          const miles = (gpsTotalDistance * 0.000621371).toFixed(2);
+          document.getElementById('gps-distance').innerText = miles;
+          // ~190 meters ≈ 0.12 miles per loop
+          const loops = Math.floor(gpsTotalDistance / 190);
+          if (loops > gpsLoopsDetected) {
+            gpsLoopsDetected = loops;
+            document.getElementById('gps-loops-count').innerText = gpsLoopsDetected;
+            // vibrate phone if supported
+            if (navigator.vibrate) navigator.vibrate(200);
+          }
         }
       }
+      gpsLastCoord = { lat, lon };
     }
 
-    function submitStride() {
-      const data = loadData();
-      let name = document.getElementById('walker-select').value;
-      if (name === '+ New Neighbor') {
-        name = document.getElementById('custom-name').value.trim();
-        if (!name) return alert('Please enter neighbor name');
+    function calcDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371e3; // metres
+      const φ1 = lat1 * Math.PI/180;
+      const φ2 = lat2 * Math.PI/180;
+      const Δφ = (lat2-lat1) * Math.PI/180;
+      const Δλ = (lon2-lon1) * Math.PI/180;
+      const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+
+    function handleGpsError(err) {
+      document.getElementById('gps-status').innerText = "GPS Note: " + err.message;
+    }
+
+
+    function submitLog() {
+      let name = document.getElementById('input-walker').value;
+      const note = document.getElementById('input-note').value.trim();
+      const state = getState();
+      let walker = state.walkers.find(w => w.name === name);
+      
+      if (name === '__new__') {
+        const customName = document.getElementById('new-walker-name').value.trim();
+        const customTeam = document.getElementById('new-walker-team').value;
+        if (!customName) return alert("Please enter the new walker's name.");
+        name = customName;
+        walker = state.walkers.find(w => w.name.toLowerCase() === name.toLowerCase());
+        if (!walker) {
+          walker = { name: name, team: customTeam, points: 0, loops: 0, steps: 0, avatar: "👟", role: "Neighbor", allPoints: 0, allLoops: 0, allSteps: 0 };
+          state.walkers.push(walker);
+          // add option to dropdown
+          const opt = document.createElement("option");
+          opt.value = name;
+          opt.text = name + " (Team " + customTeam + ")";
+          document.getElementById('input-walker').add(opt, document.getElementById('input-walker').options[document.getElementById('input-walker').options.length - 1]);
+        }
       }
-      const team = document.getElementById('walker-team').value;
-      const ptsPerLap = parseInt(document.getElementById('activity-type').value);
-      const laps = parseInt(document.getElementById('laps-input').value) || 1;
-      const earned = ptsPerLap * laps;
+      if (!walker) return;
 
-      let walker = data.walkers.find(w => w.name === name);
-      if (!walker) {
-        walker = { name, team, points: 0, loops: 0, avatar: team === 'Marcus' ? '👟' : '🔥', role: 'Neighbor' };
-        data.walkers.push(walker);
+      let pts = 0;
+      let feedText = "";
+
+      if (currentLogType === 'loops') {
+        const loops = parseInt(document.getElementById('input-loops').value, 10) || 0;
+        if (loops <= 0) return alert("Please enter at least 1 loop.");
+        pts = loops;
+        walker.loops = (walker.loops || 0) + loops;
+        walker.points = (walker.points || 0) + pts;
+        walker.allLoops = (walker.allLoops || 0) + loops;
+        walker.allPoints = (walker.allPoints || 0) + pts;
+        feedText = name + " completed " + loops + " cul-de-sac loops! (" + pts + " pts banked for Team " + walker.team + ")";
+      } else {
+        const steps = parseInt(document.getElementById('input-steps').value, 10) || 0;
+        if (steps <= 0) return alert("Please enter your steps.");
+        pts = Math.round(steps / 1000);
+        walker.steps = (walker.steps || 0) + steps;
+        walker.points = (walker.points || 0) + pts;
+        walker.allSteps = (walker.allSteps || 0) + steps;
+        walker.allPoints = (walker.allPoints || 0) + pts;
+        feedText = name + " logged " + steps.toLocaleString() + " daily steps! (" + pts + " pts banked for Team " + walker.team + ")";
       }
-      walker.points += earned;
-      walker.loops += laps;
-      walker.team = team;
 
-      data.feed.unshift({
-        text: `${name} logged ${laps} loop(s) for Team ${team}! (+${earned} pts)`,
-        time: "Just now",
-        author: name
-      });
+      if (note) { feedText += ' — "' + note + '"'; }
 
-      saveData(data);
-      showTab('leaderboard');
+      const now = new Date();
+      const timeStr = now.toLocaleDateString([], { weekday: 'short' }) + " " + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      state.feed.unshift({ text: feedText, time: timeStr, author: name });
+      if (state.feed.length > 25) state.feed.pop();
+
+      saveState(state);
+      document.getElementById('input-note').value = "";
+      alert("Hustle recorded! Added " + pts + " points to Team " + walker.team + ".");
+      switchNav('dash');
     }
 
     function render() {
-      const data = loadData();
-      
-      // Calculate Team Totals
-      let marcusPts = 0, mayPts = 0, marcusCount = 0, mayCount = 0;
-      data.walkers.forEach(w => {
-        if (w.team === 'Marcus') { marcusPts += w.points; marcusCount++; }
-        else { mayPts += w.points; mayCount++; }
+      const state = getState();
+
+      // Team Aggregates
+      let mPts = 0, yPts = 0, mLoops = 0, yLoops = 0, mSteps = 0, ySteps = 0;
+      state.walkers.forEach(w => {
+        if (w.team === 'Marcus') {
+          mPts += (w.points || 0);
+          mLoops += (w.loops || 0);
+          mSteps += (w.steps || 0);
+        } else {
+          yPts += (w.points || 0);
+          yLoops += (w.loops || 0);
+          ySteps += (w.steps || 0);
+        }
       });
 
-      document.getElementById('marcus-pts').textContent = marcusPts;
-      document.getElementById('may-pts').textContent = mayPts;
-      document.getElementById('marcus-walkers').textContent = `${marcusCount} Walkers`;
-      document.getElementById('may-walkers').textContent = `${mayCount} Walkers`;
+      document.getElementById('score-marcus').innerText = mPts;
+      document.getElementById('detail-marcus').innerHTML = mLoops + " loops &bull; " + mSteps.toLocaleString() + " steps";
+      document.getElementById('score-may').innerText = yPts;
+      document.getElementById('detail-may').innerHTML = yLoops + " loops &bull; " + ySteps.toLocaleString() + " steps";
 
-      const total = (marcusPts + mayPts) || 1;
-      const marcusPct = Math.round((marcusPts / total) * 100);
-      document.getElementById('bar-marcus').style.width = marcusPct + '%';
-      document.getElementById('bar-may').style.width = (100 - marcusPct) + '%';
+      const total = mPts + yPts;
+      const mPct = total === 0 ? 50 : Math.max(10, Math.min(90, (mPts / total) * 100));
+      document.getElementById('bar-marcus').style.width = mPct + '%';
+      document.getElementById('bar-may').style.width = (100 - mPct) + '%';
 
-      // Sort Leaderboard
-      const sorted = [...data.walkers].sort((a, b) => b.points - a.points);
-      const listEl = document.getElementById('leaderboard-list');
-      listEl.innerHTML = '';
+      const totLoops = mLoops + yLoops;
+      const totSteps = mSteps + ySteps;
+      const totMiles = ((totLoops * 0.12) + (totSteps / 2000)).toFixed(1);
 
-      sorted.forEach((w, idx) => {
-        const item = document.createElement('div');
-        item.className = 'leaderboard-item';
-        const teamClass = w.team.toLowerCase();
-        item.innerHTML = `
-          <div class="rank-num">#${idx + 1}</div>
-          <div class="avatar ${teamClass}">${w.avatar || '👟'}</div>
-          <div class="user-info">
-            <div class="user-name">${w.name} ${idx === 0 ? '👑' : ''}</div>
-            <div class="user-team team-${teamClass}">Team ${w.team} • ${w.role || 'Walker'}</div>
-          </div>
-          <div class="score-block">
-            <div class="score-pts">${w.points}</div>
-            <div class="score-label">${w.loops} loops</div>
-          </div>
-        `;
-        listEl.appendChild(item);
-      });
+      document.getElementById('stat-total-loops').innerText = totLoops;
+      document.getElementById('stat-total-miles').innerText = totMiles;
+      document.getElementById('stat-total-steps').innerText = totSteps.toLocaleString();
 
-      // Render Feed
-      const feedEl = document.getElementById('feed-list');
-      feedEl.innerHTML = '';
-      data.feed.slice(0, 15).forEach(f => {
-        const fItem = document.createElement('div');
-        fItem.className = 'leaderboard-item';
-        fItem.innerHTML = `
-          <div class="avatar marcus">💬</div>
-          <div class="user-info">
-            <div class="user-name" style="font-size: 13px; font-weight: 600;">${f.text}</div>
-            <div class="subtitle" style="font-size: 11px;">${f.time}</div>
-          </div>
-        `;
-        feedEl.appendChild(fItem);
-      });
+      renderIndividual();
+      renderFeed();
     }
 
+    function renderIndividual() {
+      const state = getState();
+      const listEl = document.getElementById('walker-list');
+      const sorted = [...state.walkers].sort((a, b) => (b[currentSort] || 0) - (a[currentSort] || 0));
+
+      listEl.innerHTML = sorted.map((w, i) => {
+        const medal = i === 0 ? "🥇" : (i === 1 ? "🥈" : (i === 2 ? "🥉" : (i + 1)));
+        const teamClass = w.team === 'Marcus' ? 'team-marcus' : 'team-may';
+        return '<div class="walker-row">' +
+          '<div class="rank-badge">' + medal + '</div>' +
+          '<div class="avatar">' + w.avatar + '</div>' +
+          '<div class="walker-info">' +
+            '<div class="walker-name">' + w.name + ' <span class="' + teamClass + '" style="font-size:0.7rem;">&bull; Team ' + w.team + '</span></div>' +
+            '<div class="walker-role">' + w.role + ' &bull; ' + (w.loops || 0) + ' loops &bull; ' + (w.steps || 0).toLocaleString() + ' steps</div>' +
+          '</div>' +
+          '<div class="walker-score">' +
+            '<div class="score-pts">' + (w[currentSort] || 0).toLocaleString() + '</div>' +
+            '<div class="score-detail">' + currentSort + '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function renderFeed() {
+      const state = getState();
+      const feedEl = document.getElementById('feed-list');
+      feedEl.innerHTML = state.feed.map(item => 
+        '<div class="feed-item">' +
+          '<div>' + item.text + '</div>' +
+          '<div class="feed-meta"><span>By ' + item.author + '</span><span>' + item.time + '</span></div>' +
+        '</div>'
+      ).join('');
+    }
+
+    function resetAll() {
+      if (confirm("Are you sure you want to reset all scores to zero for a fresh season?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        render();
+        alert("Season reset! All scores are zeroed out.");
+      }
+    }
+
+    // Initialize
     render();
   </script>
 </body>
