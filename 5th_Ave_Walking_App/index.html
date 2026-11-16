@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>5th Ave Cul-de-Sac Stride Club</title>
+  <title>Cul-de-Sac Walking Club</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
@@ -249,22 +249,22 @@
 <body>
 
   <header>
-    <div class="badge">5th Avenue Cul-de-Sac • Est. 2026</div>
-    <h1>5th Ave Stride Club</h1>
-    <p class="subtitle">United Cul-de-Sac Walking & Fitness Challenge</p>
+    <div class="badge">Cul-de-Sac Walking Club • Est. 2026</div>
+    <h1>5th Ave Walking Club</h1>
+    <p class="subtitle">Community Walking & Fitness Challenge</p>
   </header>
 
   <!-- UNIFIED COMMUNITY MILESTONE (NO TEAMS!) -->
   <div class="community-card">
     <div class="community-header">
-      <span class="community-title">🌟 Cul-de-Sac Weekly Milestone</span>
+      <span class="community-title">🌟 Walking Club Weekly Milestone</span>
       <span class="community-stat" id="total-community-steps">0 Steps</span>
     </div>
     <div class="progress-bar-bg">
       <div class="progress-bar-fill" id="community-bar" style="width: 0%;"></div>
     </div>
     <div class="community-meta">
-      <span id="active-walkers-count">0 Neighbors Active</span>
+      <span id="active-walkers-count">0 Walkers Active</span>
       <span>GOAL: 250,000 STEPS</span>
       <span id="pct-goal">0%</span>
     </div>
@@ -273,19 +273,18 @@
   <!-- PROMINENT OBVIOUS STEP LOGGING CARD -->
   <div class="log-card">
     <div class="log-title">⚡ LOG YOUR STEPS TODAY</div>
-    <div class="log-sub">Quickly record your walk to move up the street leaderboard!</div>
+    <div class="log-sub">Select your name and record your steps to move up the leaderboard!</div>
 
     <div class="form-group">
       <label>1. Select Your Name</label>
       <select id="user-select">
-        <option value="Marcus">👑 Marcus (3307 5th Ave)</option>
-        <option value="May">🔥 May (3306 5th Ave)</option>
-        <option value="Kelly">⭐ Kelly (3303 5th Ave)</option>
-        <option value="Dae">⚡ Dae (3300 5th Ave)</option>
-        <option value="Ebonj">✨ Ebonj (3306-B 5th Ave)</option>
-        <option value="Hannah">🌟 Hannah (5th Ave)</option>
-        <option value="Jon">🎯 Jon (3311 5th Ave)</option>
-        <option value="Julie">🏆 Julie (3311 5th Ave)</option>
+        <option value="Marcus">👑 Marcus</option>
+        <option value="May">🔥 May</option>
+        <option value="Kelly">⭐ Kelly</option>
+        <option value="Dae">⚡ Dae</option>
+        <option value="Ebonj">✨ Ebonj</option>
+        <option value="Hannah">🌟 Hannah</option>
+        <option value="Julie">🏆 Julie</option>
       </select>
     </div>
 
@@ -305,7 +304,7 @@
 
   <!-- INDIVIDUAL STREET LEADERBOARD -->
   <div class="section-title">
-    <span>🏆 Street Leaderboard</span>
+    <span>🏆 Walking Club Leaderboard</span>
     <span style="font-size:11px; color:#38bdf8;">Updated Live</span>
   </div>
 
@@ -316,24 +315,24 @@
   <div class="toast" id="toast">🎉 Steps Recorded! Keep Striding!</div>
 
   <script>
+    // Sanitized: First names only, zero house numbers, zero street addresses, Jon removed
     const INITIAL_USERS = [
-      { name: "Marcus", house: "3307 5th Ave", avatar: "👑", steps: 14200, streak: 4 },
-      { name: "May", house: "3306 5th Ave", avatar: "🔥", steps: 16800, streak: 5 },
-      { name: "Kelly", house: "3303 5th Ave", avatar: "⭐", steps: 9400, streak: 3 },
-      { name: "Dae", house: "3300 5th Ave", avatar: "⚡", steps: 8100, streak: 2 },
-      { name: "Ebonj", house: "3306-B 5th Ave", avatar: "✨", steps: 6500, streak: 2 },
-      { name: "Hannah", house: "5th Ave", avatar: "🌟", steps: 5200, streak: 1 },
-      { name: "Jon", house: "3311 5th Ave", avatar: "🎯", steps: 7800, streak: 2 },
-      { name: "Julie", house: "3311 5th Ave", avatar: "🏆", steps: 11200, streak: 4 }
+      { name: "Marcus", avatar: "👑", steps: 14200, streak: 4 },
+      { name: "May", avatar: "🔥", steps: 16800, streak: 5 },
+      { name: "Kelly", avatar: "⭐", steps: 9400, streak: 3 },
+      { name: "Dae", avatar: "⚡", steps: 8100, streak: 2 },
+      { name: "Ebonj", avatar: "✨", steps: 6500, streak: 2 },
+      { name: "Hannah", avatar: "🌟", steps: 5200, streak: 1 },
+      { name: "Julie", avatar: "🏆", steps: 11200, streak: 4 }
     ];
 
     function getUsers() {
-      const saved = localStorage.getItem("culdesac_stride_users_v2");
+      const saved = localStorage.getItem("culdesac_stride_users_v3");
       return saved ? JSON.parse(saved) : INITIAL_USERS;
     }
 
     function saveUsers(users) {
-      localStorage.setItem("culdesac_stride_users_v2", JSON.stringify(users));
+      localStorage.setItem("culdesac_stride_users_v3", JSON.stringify(users));
     }
 
     function setPreset(val) {
@@ -363,7 +362,7 @@
           <div class="avatar">${u.avatar}</div>
           <div class="user-info">
             <div class="user-name">${u.name} ${u.name === 'Marcus' ? '👑' : ''}</div>
-            <div class="user-sub">${u.house} • ${miles} miles • 🔥 ${u.streak}d streak</div>
+            <div class="user-sub">${miles} miles • 🔥 ${u.streak}d streak</div>
           </div>
           <div class="score-block">
             <div class="score-steps">${u.steps.toLocaleString()}</div>
@@ -379,7 +378,7 @@
       const pct = Math.min(100, Math.round((totalCommunitySteps / goal) * 100));
       document.getElementById("community-bar").style.width = pct + "%";
       document.getElementById("pct-goal").innerText = pct + "% of Goal";
-      document.getElementById("active-walkers-count").innerText = users.filter(u => u.steps > 0).length + " Neighbors Active";
+      document.getElementById("active-walkers-count").innerText = users.filter(u => u.steps > 0).length + " Walkers Active";
     }
 
     function submitSteps() {
