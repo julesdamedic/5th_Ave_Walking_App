@@ -393,30 +393,30 @@
   <div class="toast" id="toast">🎉 Steps Recorded! Keep Striding!</div>
 
   <script>
-    const INITIAL_USERS = [
-      { name: "May", avatar: "🔥", steps: 16800, streak: 5 },
-      { name: "Marcus", avatar: "👑", steps: 14200, streak: 4 },
-      { name: "Julie", avatar: "🏆", steps: 11200, streak: 4 },
-      { name: "Kelly", avatar: "⭐", steps: 9400, streak: 3 },
-      { name: "Tre", avatar: "💪", steps: 8900, streak: 3 },
-      { name: "Dae", avatar: "🚀", steps: 8100, streak: 2 },
-      { name: "Scott", avatar: "⚡", steps: 7600, streak: 2 },
-      { name: "Eboni", avatar: "✨", steps: 6500, streak: 2 },
-      { name: "Nicolle", avatar: "🌸", steps: 6200, streak: 2 },
-      { name: "Dominque", avatar: "🎯", steps: 5900, streak: 2 },
-      { name: "Hannah", avatar: "🌟", steps: 5200, streak: 1 },
-      { name: "Jan", avatar: "🏃", steps: 4800, streak: 1 },
-      { name: "Robin", avatar: "🌿", steps: 4500, streak: 1 },
-      { name: "Lula", avatar: "🐾", steps: 3800, streak: 1 }
+        const INITIAL_USERS = [
+      { name: "Marcus", avatar: "👑", steps: 0, streak: 0 },
+      { name: "May", avatar: "🔥", steps: 0, streak: 0 },
+      { name: "Julie", avatar: "🏆", steps: 0, streak: 0 },
+      { name: "Kelly", avatar: "⭐", steps: 0, streak: 0 },
+      { name: "Tre", avatar: "💪", steps: 0, streak: 0 },
+      { name: "Dae", avatar: "🚀", steps: 0, streak: 0 },
+      { name: "Scott", avatar: "⚡", steps: 0, streak: 0 },
+      { name: "Eboni", avatar: "✨", steps: 0, streak: 0 },
+      { name: "Nicolle", avatar: "🌸", steps: 0, streak: 0 },
+      { name: "Dominque", avatar: "🎯", steps: 0, streak: 0 },
+      { name: "Hannah", avatar: "🌟", steps: 0, streak: 0 },
+      { name: "Jan", avatar: "🏃", steps: 0, streak: 0 },
+      { name: "Robin", avatar: "🌿", steps: 0, streak: 0 },
+      { name: "Lula", avatar: "🐾", steps: 0, streak: 0 }
     ];
 
     function getUsers() {
-      const saved = localStorage.getItem("culdesac_walking_users_v5");
+      const saved = localStorage.getItem("culdesac_walking_users_v6");
       return saved ? JSON.parse(saved) : INITIAL_USERS;
     }
 
     function saveUsers(users) {
-      localStorage.setItem("culdesac_walking_users_v5", JSON.stringify(users));
+      localStorage.setItem("culdesac_walking_users_v6", JSON.stringify(users));
     }
 
     function setPreset(val) {
