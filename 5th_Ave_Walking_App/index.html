@@ -254,7 +254,7 @@
     <p class="subtitle">Community Walking & Fitness Challenge</p>
   </header>
 
-  <!-- UNIFIED COMMUNITY MILESTONE (NO TEAMS!) -->
+  <!-- UNIFIED COMMUNITY MILESTONE -->
   <div class="community-card">
     <div class="community-header">
       <span class="community-title">🌟 Walking Club Weekly Milestone</span>
@@ -265,7 +265,7 @@
     </div>
     <div class="community-meta">
       <span id="active-walkers-count">0 Walkers Active</span>
-      <span>GOAL: 250,000 STEPS</span>
+      <span>GOAL: 350,000 STEPS</span>
       <span id="pct-goal">0%</span>
     </div>
   </div>
@@ -281,9 +281,16 @@
         <option value="Marcus">👑 Marcus</option>
         <option value="May">🔥 May</option>
         <option value="Kelly">⭐ Kelly</option>
-        <option value="Dae">⚡ Dae</option>
-        <option value="Ebonj">✨ Ebonj</option>
         <option value="Hannah">🌟 Hannah</option>
+        <option value="Scott">⚡ Scott</option>
+        <option value="Dae">🚀 Dae</option>
+        <option value="Eboni">✨ Eboni</option>
+        <option value="Jan">🏃 Jan</option>
+        <option value="Tre">💪 Tre</option>
+        <option value="Dominque">🎯 Dominque</option>
+        <option value="Nicolle">🌸 Nicolle</option>
+        <option value="Robin">🌿 Robin</option>
+        <option value="Lula">🐾 Lula</option>
         <option value="Julie">🏆 Julie</option>
       </select>
     </div>
@@ -315,24 +322,31 @@
   <div class="toast" id="toast">🎉 Steps Recorded! Keep Striding!</div>
 
   <script>
-    // Sanitized: First names only, zero house numbers, zero street addresses, Jon removed
+    // Complete 14-neighbor roster, first names only, zero house numbers, zero street addresses
     const INITIAL_USERS = [
       { name: "Marcus", avatar: "👑", steps: 14200, streak: 4 },
       { name: "May", avatar: "🔥", steps: 16800, streak: 5 },
       { name: "Kelly", avatar: "⭐", steps: 9400, streak: 3 },
-      { name: "Dae", avatar: "⚡", steps: 8100, streak: 2 },
-      { name: "Ebonj", avatar: "✨", steps: 6500, streak: 2 },
       { name: "Hannah", avatar: "🌟", steps: 5200, streak: 1 },
+      { name: "Scott", avatar: "⚡", steps: 7600, streak: 2 },
+      { name: "Dae", avatar: "🚀", steps: 8100, streak: 2 },
+      { name: "Eboni", avatar: "✨", steps: 6500, streak: 2 },
+      { name: "Jan", avatar: "🏃", steps: 4800, streak: 1 },
+      { name: "Tre", avatar: "💪", steps: 8900, streak: 3 },
+      { name: "Dominque", avatar: "🎯", steps: 5900, streak: 2 },
+      { name: "Nicolle", avatar: "🌸", steps: 6200, streak: 2 },
+      { name: "Robin", avatar: "🌿", steps: 4500, streak: 1 },
+      { name: "Lula", avatar: "🐾", steps: 3800, streak: 1 },
       { name: "Julie", avatar: "🏆", steps: 11200, streak: 4 }
     ];
 
     function getUsers() {
-      const saved = localStorage.getItem("culdesac_stride_users_v3");
+      const saved = localStorage.getItem("culdesac_stride_users_v4");
       return saved ? JSON.parse(saved) : INITIAL_USERS;
     }
 
     function saveUsers(users) {
-      localStorage.setItem("culdesac_stride_users_v3", JSON.stringify(users));
+      localStorage.setItem("culdesac_stride_users_v4", JSON.stringify(users));
     }
 
     function setPreset(val) {
@@ -374,7 +388,7 @@
 
       // Update Community Milestone Bar
       document.getElementById("total-community-steps").innerText = totalCommunitySteps.toLocaleString() + " Steps";
-      const goal = 250000;
+      const goal = 350000;
       const pct = Math.min(100, Math.round((totalCommunitySteps / goal) * 100));
       document.getElementById("community-bar").style.width = pct + "%";
       document.getElementById("pct-goal").innerText = pct + "% of Goal";
