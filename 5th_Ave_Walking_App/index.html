@@ -3,639 +3,413 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>5th Ave Cul-de-Sac Stride Leaderboard</title>
-  <meta name="theme-color" content="#0d1b2a">
-  <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/running.png">
+  <title>5th Ave Cul-de-Sac Stride Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d1b2a;
-      --card-bg: #1b263b;
-      --accent-marcus: #1e3d59;
-      --accent-gold: #ffc107;
-      --accent-may: #e07a5f;
+      --gold: #f59e0b;
+      --gold-dark: #d97706;
+      --accent-blue: #38bdf8;
       --accent-green: #10b981;
-      --accent-green-bright: #34d399;
-      --text: #e0e1dd;
-      --text-muted: #8d99ae;
-      --border: #415a77;
+      --bg: #0b0f19;
+      --card-bg: #151d2f;
+      --card-border: #243049;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 75px; -webkit-tap-highlight-color: transparent; }
-    header { background: linear-gradient(135deg, #1b263b, #0d1b2a); padding: 18px 16px 14px; text-align: center; border-bottom: 1px solid var(--border); }
-    header h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.5px; color: var(--accent-gold); text-transform: uppercase; }
-    header p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
-    
-    .nav-tabs { display: flex; background: #14213d; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-    .nav-btn { flex: 1; padding: 12px 6px; text-align: center; font-size: 0.82rem; font-weight: 700; color: var(--text-muted); background: none; border: none; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; }
-    .nav-btn.active { color: var(--accent-gold); border-bottom-color: var(--accent-gold); background: rgba(255, 193, 7, 0.05); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
 
-    .container { max-width: 520px; margin: 0 auto; padding: 14px; }
-    .sub-toggle { display: flex; background: #14213d; border-radius: 10px; padding: 4px; margin-bottom: 14px; border: 1px solid var(--border); }
-    .sub-btn { flex: 1; padding: 8px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); background: none; border: none; border-radius: 7px; cursor: pointer; transition: all 0.2s; }
-    .sub-btn.active { background: var(--card-bg); color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-    .sub-btn.active.green-active { background: #064e3b; color: var(--accent-green-bright); border: 1px solid var(--accent-green); }
+    /* Header */
+    header {
+      background: linear-gradient(180deg, #151d2f 0%, #0b0f19 100%);
+      padding: 24px 16px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .subtitle { font-size: 13px; color: var(--text-muted); }
 
-    .card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; margin-bottom: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-    .card.green-card { border-color: rgba(16, 185, 129, 0.4); background: linear-gradient(180deg, #132a26, #1b263b); }
-    .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    /* UNIFIED COMMUNITY MILESTONE */
+    .community-card {
+      margin: 16px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--card-border);
+    }
+    .community-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .community-title { font-size: 14px; font-weight: 700; color: var(--accent-blue); }
+    .community-stat { font-size: 18px; font-weight: 800; color: #fff; }
+    .progress-bar-bg {
+      height: 14px;
+      background: #1e293b;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .progress-bar-fill {
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      height: 100%;
+      width: 45%;
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+    .community-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
 
-    /* Team Cup */
-    .cup-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 800; font-size: 0.9rem; }
-    .team-marcus { color: #63b3ed; }
-    .team-may { color: var(--accent-may); }
-    .progress-bar-wrap { height: 20px; background: var(--bg); border-radius: 10px; overflow: hidden; display: flex; border: 1px solid var(--border); margin-bottom: 10px; }
-    .progress-marcus { background: linear-gradient(90deg, #3182ce, #63b3ed); height: 100%; transition: width 0.3s; }
-    .progress-may { background: linear-gradient(90deg, #e07a5f, #f6ad55); height: 100%; transition: width 0.3s; }
-    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .team-box { padding: 10px; border-radius: 8px; text-align: center; }
-    .team-box.m { background: rgba(49, 130, 206, 0.15); border: 1px solid #3182ce; }
-    .team-box.y { background: rgba(224, 122, 95, 0.15); border: 1px solid #e07a5f; }
-    .stat-num { font-size: 1.5rem; font-weight: 800; margin-top: 2px; }
-    .stat-lbl { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    /* PROMINENT LOG STEPS CARD */
+    .log-card {
+      margin: 0 16px 20px;
+      background: linear-gradient(135deg, #1e293b 0%, #151d2f 100%);
+      border: 2px solid var(--gold);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.15);
+    }
+    .log-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .log-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .form-group { margin-bottom: 14px; }
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    select, input[type="number"] {
+      width: 100%;
+      background: #0b0f19;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      outline: none;
+    }
+    select:focus, input[type="number"]:focus {
+      border-color: var(--gold);
+    }
 
-    /* Individual List (GREEN THEMED) */
-    .sort-pills { display: flex; gap: 6px; margin-bottom: 10px; }
-    .sort-pill { flex: 1; padding: 7px 4px; font-size: 0.75rem; font-weight: 700; background: #14213d; border: 1px solid var(--border); border-radius: 6px; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.2s; }
-    .sort-pill.active { background: var(--accent-green); color: #0d1b2a; border-color: var(--accent-green-bright); font-weight: 800; box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+    /* Quick Step Preset Buttons */
+    .preset-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .preset-btn {
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 10px 4px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .preset-btn:hover, .preset-btn.active {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
 
-    .walker-row { display: flex; align-items: center; padding: 11px 8px; border-bottom: 1px solid rgba(16, 185, 129, 0.12); }
-    .walker-row:last-child { border-bottom: none; }
-    .rank-badge { width: 28px; font-size: 1rem; font-weight: 800; text-align: center; margin-right: 6px; color: var(--accent-green-bright); }
-    .avatar { font-size: 1.5rem; margin-right: 10px; }
-    .walker-info { flex: 1; }
-    .walker-name { font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
-    .walker-role { font-size: 0.72rem; color: var(--text-muted); }
-    .walker-score { text-align: right; }
-    .score-pts { font-size: 1.25rem; font-weight: 800; color: var(--accent-green-bright); text-shadow: 0 0 8px rgba(16, 185, 129, 0.3); }
-    .score-detail { font-size: 0.72rem; color: #a7f3d0; text-transform: uppercase; letter-spacing: 0.5px; }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #0b0f19;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+      transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .btn-submit:active { transform: scale(0.98); }
 
-    
-    .scope-btn { flex: 1; padding: 8px 6px; font-size: 0.78rem; font-weight: 800; border-radius: 8px; border: 1px solid var(--border); background: #14213d; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.2s; }
-    .scope-btn.active { background: #ffc107; color: #0d1b2a; border-color: #ffc107; box-shadow: 0 0 10px rgba(255, 193, 7, 0.3); }
+    /* LEADERBOARD LIST */
+    .section-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 0 20px 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .leaderboard-container { padding: 0 16px; }
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      transition: transform 0.2s;
+    }
+    .rank-num {
+      width: 28px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-right: 12px;
+      background: #1e293b;
+      border: 2px solid var(--card-border);
+    }
+    .user-info { flex: 1; }
+    .user-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+    .user-sub { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .score-block { text-align: right; }
+    .score-steps { font-size: 17px; font-weight: 800; color: #fff; }
+    .score-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
 
-    /* Form */
-    .form-group { margin-bottom: 12px; }
-    label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: var(--text-muted); text-transform: uppercase; }
-    select, input { width: 100%; padding: 12px; background: #14213d; border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 1rem; outline: none; }
-    select:focus, input:focus { border-color: var(--accent-green); }
-    .type-toggle { display: flex; gap: 8px; margin-bottom: 12px; }
-    .type-btn { flex: 1; padding: 10px; font-size: 0.85rem; font-weight: 700; background: #14213d; border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted); cursor: pointer; text-align: center; }
-    .type-btn.active { background: var(--accent-green); color: #0d1b2a; border-color: var(--accent-green); }
-    .btn-submit { width: 100%; padding: 14px; background: linear-gradient(135deg, #10b981, #34d399); border: none; border-radius: 8px; font-size: 1rem; font-weight: 800; color: #064e3b; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-
-    /* Feed */
-    .feed-item { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.85rem; }
-    .feed-item:last-child { border-bottom: none; }
-    .feed-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; display: flex; justify-content: space-between; }
-
-    .reset-btn { background: none; border: 1px solid #e53e3e; color: #e53e3e; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; margin-top: 15px; display: block; width: 100%; text-align: center; }
+    /* Success Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #10b981;
+      color: #fff;
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: 999px;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      font-size: 14px;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>5th Ave Stride League</h1>
-    <p>Cul-de-Sac Walking Club &bull; Season 1</p>
+    <div class="badge">5th Avenue Cul-de-Sac • Est. 2026</div>
+    <h1>5th Ave Stride Club</h1>
+    <p class="subtitle">United Cul-de-Sac Walking & Fitness Challenge</p>
   </header>
 
-  <div class="nav-tabs">
-    <button class="nav-btn active" onclick="switchNav('dash')">📊 Leaderboard</button>
-    <button class="nav-btn" onclick="switchNav('log')">➕ Log Activity</button>
-    <button class="nav-btn" onclick="switchNav('feed')">💬 Club Feed</button>
+  <!-- UNIFIED COMMUNITY MILESTONE (NO TEAMS!) -->
+  <div class="community-card">
+    <div class="community-header">
+      <span class="community-title">🌟 Cul-de-Sac Weekly Milestone</span>
+      <span class="community-stat" id="total-community-steps">0 Steps</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="community-bar" style="width: 0%;"></div>
+    </div>
+    <div class="community-meta">
+      <span id="active-walkers-count">0 Neighbors Active</span>
+      <span>GOAL: 250,000 STEPS</span>
+      <span id="pct-goal">0%</span>
+    </div>
   </div>
 
-  <div class="container">
+  <!-- PROMINENT OBVIOUS STEP LOGGING CARD -->
+  <div class="log-card">
+    <div class="log-title">⚡ LOG YOUR STEPS TODAY</div>
+    <div class="log-sub">Quickly record your walk to move up the street leaderboard!</div>
 
-    <!-- DASHBOARD VIEW -->
-    <div id="view-dash">
-      
-      <!-- TIME SCOPE TOGGLE (OPTION 2) -->
-      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-        <button class="scope-btn active" id="scope-week" onclick="setScope('week')">📅 This Week (Resets Sun)</button>
-        <button class="scope-btn" id="scope-all" onclick="setScope('all')">🌟 All-Time Season</button>
-      </div>
-      <div class="sub-toggle">
-        <button class="sub-btn active" id="btn-sub-team" onclick="switchSub('team')">🏆 Team Cup</button>
-        <button class="sub-btn" id="btn-sub-indiv" onclick="switchSub('indiv')">🟢 Individual Rankings</button>
-      </div>
+    <div class="form-group">
+      <label>1. Select Your Name</label>
+      <select id="user-select">
+        <option value="Marcus">👑 Marcus (3307 5th Ave)</option>
+        <option value="May">🔥 May (3306 5th Ave)</option>
+        <option value="Kelly">⭐ Kelly (3303 5th Ave)</option>
+        <option value="Dae">⚡ Dae (3300 5th Ave)</option>
+        <option value="Ebonj">✨ Ebonj (3306-B 5th Ave)</option>
+        <option value="Hannah">🌟 Hannah (5th Ave)</option>
+        <option value="Jon">🎯 Jon (3311 5th Ave)</option>
+        <option value="Julie">🏆 Julie (3311 5th Ave)</option>
+      </select>
+    </div>
 
-      <!-- TEAM CUP VIEW -->
-      <div id="dash-team">
-        <div class="card">
-          <div class="cup-header">
-            <span class="team-marcus">TEAM MARCUS</span>
-            <span class="team-may">TEAM MAY</span>
-          </div>
-          <div class="progress-bar-wrap">
-            <div id="bar-marcus" class="progress-marcus" style="width: 50%;"></div>
-            <div id="bar-may" class="progress-may" style="width: 50%;"></div>
-          </div>
-          <div class="team-grid">
-            <div class="team-box m">
-              <div class="stat-lbl">Points &bull; Loops</div>
-              <div id="score-marcus" class="stat-num team-marcus">0</div>
-              <div id="detail-marcus" class="stat-lbl">0 loops &bull; 0 steps</div>
-            </div>
-            <div class="team-box y">
-              <div class="stat-lbl">Points &bull; Loops</div>
-              <div id="score-may" class="stat-num team-may">0</div>
-              <div id="detail-may" class="stat-lbl">0 loops &bull; 0 steps</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Neighborhood Impact</div>
-          <div style="display: flex; justify-content: space-around; text-align: center; padding: 6px 0;">
-            <div>
-              <div id="stat-total-loops" style="font-size: 1.4rem; font-weight: 800; color: #fff;">0</div>
-              <div class="stat-lbl">Cul-de-Sac Loops</div>
-            </div>
-            <div>
-              <div id="stat-total-miles" style="font-size: 1.4rem; font-weight: 800; color: var(--accent-gold);">0.0</div>
-              <div class="stat-lbl">Total Miles</div>
-            </div>
-            <div>
-              <div id="stat-total-steps" style="font-size: 1.4rem; font-weight: 800; color: var(--accent-green-bright);">0</div>
-              <div class="stat-lbl">Total Steps</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- INDIVIDUAL STANDINGS VIEW (GREEN THEMED) -->
-      <div id="dash-indiv" style="display: none;">
-        <div class="sort-pills">
-          <div class="sort-pill active" id="sort-points" onclick="setSort('points')">⚡ By Points</div>
-          <div class="sort-pill" id="sort-steps" onclick="setSort('steps')">👟 By Steps</div>
-          <div class="sort-pill" id="sort-loops" onclick="setSort('loops')">🔄 By Loops</div>
-        </div>
-        <div class="card green-card">
-          <div class="card-title" style="color: var(--accent-green-bright);">
-            <span>Individual Leaderboard</span>
-            <span style="font-size: 0.72rem; color: #a7f3d0; font-weight: normal;">Live Season 1</span>
-          </div>
-          <div id="walker-list"></div>
-        </div>
+    <div class="form-group">
+      <label>2. Steps Walked</label>
+      <input type="number" id="steps-input" placeholder="e.g. 5,000" min="100" step="100">
+      <div class="preset-container">
+        <button type="button" class="preset-btn" onclick="setPreset(2500)">+2,500</button>
+        <button type="button" class="preset-btn" onclick="setPreset(5000)">+5,000</button>
+        <button type="button" class="preset-btn" onclick="setPreset(7500)">+7,500</button>
+        <button type="button" class="preset-btn" onclick="setPreset(10000)">+10,000</button>
       </div>
     </div>
 
-    <!-- LOG ACTIVITY VIEW -->
-    <div id="view-log" style="display: none;">
-      <div class="card">
-        <div class="card-title">Record Your Hustle</div>
-        <div class="type-toggle" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
-          <div class="type-btn active" id="type-loops" onclick="setLogType('loops')">✍️ Manual Loops<br><span style="font-size:0.68rem; font-weight:normal;">Type loops</span></div>
-          <div class="type-btn" id="type-gps" onclick="setLogType('gps')">🛰️ GPS Live Walk<br><span style="font-size:0.68rem; font-weight:normal;">Auto-counts laps</span></div>
-          <div class="type-btn" id="type-steps" onclick="setLogType('steps')">👟 Daily Steps<br><span style="font-size:0.68rem; font-weight:normal;">1k steps = 1 pt</span></div>
-        </div>
-
-        <div class="form-group">
-          <label>Select Walker</label>
-          <select id="input-walker" onchange="checkNewWalker(this.value)">
-            <option value="Marcus">Marcus (Coach)</option>
-            <option value="May">May (CMO)</option>
-            <option value="Dr. C">Dr. C (Strategist)</option>
-            <option value="Jon">Jon (Pace Keeper)</option>
-            <option value="Lula Ditu">Lula Ditu (Neighbor)</option>
-            <option value="Dae">Dae (Neighbor)</option>
-            <option value="Gromit">Gromit (K9 Mascot)</option>
-            <option value="__new__">➕ Add New Walker / Enter Name...</option>
-          </select>
-          <div id="new-walker-box" style="display: none; background: #1b263b; border: 1px solid var(--accent-gold); border-radius: 8px; padding: 10px; margin-top: 8px;">
-            <label style="color: var(--accent-gold);">New Walker Name:</label>
-            <input type="text" id="new-walker-name" placeholder="Enter full name" style="margin-bottom: 8px;">
-            <label style="color: var(--accent-gold);">Select Team:</label>
-            <select id="new-walker-team">
-              <option value="Marcus">Team Marcus</option>
-              <option value="May">Team May</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group" id="group-loops">
-          <label>Loops Walked</label>
-          <input type="number" id="input-loops" min="1" value="2" placeholder="e.g. 2 or 5 loops">
-          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">1 cul-de-sac loop ≈ 0.12 miles. 8 loops ≈ 1 mile.</div>
-        </div>
-
-        
-        <!-- GPS LIVE TRACKER BLOCK -->
-        <div id="group-gps" style="display: none; background: #064e3b; border: 1px solid #10b981; border-radius: 10px; padding: 14px; margin-bottom: 14px; text-align: center;">
-          <div style="font-size: 0.85rem; font-weight: 800; color: #34d399; text-transform: uppercase;">Live Cul-de-Sac GPS Tracker</div>
-          <div style="font-size: 0.72rem; color: #a7f3d0; margin-top: 2px;">Put phone in pocket — detects loops as you circle the street!</div>
-          
-          <div style="display: flex; justify-content: space-around; margin: 12px 0;">
-            <div>
-              <div id="gps-loops-count" style="font-size: 2rem; font-weight: 800; color: #fff;">0</div>
-              <div style="font-size: 0.7rem; color: #a7f3d0;">LOOPS COMPLETED</div>
-            </div>
-            <div>
-              <div id="gps-distance" style="font-size: 2rem; font-weight: 800; color: #ffc107;">0.00</div>
-              <div style="font-size: 0.7rem; color: #a7f3d0;">MILES</div>
-            </div>
-            <div>
-              <div id="gps-timer" style="font-size: 2rem; font-weight: 800; color: #63b3ed;">00:00</div>
-              <div style="font-size: 0.7rem; color: #a7f3d0;">TIME</div>
-            </div>
-          </div>
-
-          <button id="btn-gps-start" onclick="toggleGpsTracking()" style="width: 100%; padding: 12px; background: #10b981; border: none; border-radius: 8px; font-weight: 800; color: #064e3b; cursor: pointer; text-transform: uppercase;">🟢 Start GPS Walk</button>
-          <div id="gps-status" style="font-size: 0.72rem; color: #a7f3d0; margin-top: 6px;">GPS Standby</div>
-        </div>
-
-        <div class="form-group" id="group-steps" style="display: none;">
-          <label>Steps From Phone / Watch</label>
-          <input type="number" id="input-steps" min="100" step="500" value="5000" placeholder="e.g. 7500">
-          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Check Apple Health, Google Fit, or Samsung Health.</div>
-        </div>
-
-        <div class="form-group">
-          <label>Hype Note / Shoutout (Optional)</label>
-          <input type="text" id="input-note" placeholder="e.g. Evening walk in the books!">
-        </div>
-
-        <button class="btn-submit" onclick="submitLog()">Log Points &bull; Update Board</button>
-      </div>
-
-      <button class="reset-btn" onclick="resetAll()">⚠️ Reset Season to Zero</button>
-    </div>
-
-    <!-- CLUB FEED VIEW -->
-    <div id="view-feed" style="display: none;">
-      <div class="card">
-        <div class="card-title">Club Activity & Trash Talk</div>
-        <div id="feed-list"></div>
-      </div>
-    </div>
-
+    <button class="btn-submit" onclick="submitSteps()">RECORD MY STEPS 🚀</button>
   </div>
+
+  <!-- INDIVIDUAL STREET LEADERBOARD -->
+  <div class="section-title">
+    <span>🏆 Street Leaderboard</span>
+    <span style="font-size:11px; color:#38bdf8;">Updated Live</span>
+  </div>
+
+  <div class="leaderboard-container" id="leaderboard-list">
+    <!-- Populated dynamically -->
+  </div>
+
+  <div class="toast" id="toast">🎉 Steps Recorded! Keep Striding!</div>
 
   <script>
-    const STORAGE_KEY = 'stride_data_v2';
-    let currentSort = 'points';
+    const INITIAL_USERS = [
+      { name: "Marcus", house: "3307 5th Ave", avatar: "👑", steps: 14200, streak: 4 },
+      { name: "May", house: "3306 5th Ave", avatar: "🔥", steps: 16800, streak: 5 },
+      { name: "Kelly", house: "3303 5th Ave", avatar: "⭐", steps: 9400, streak: 3 },
+      { name: "Dae", house: "3300 5th Ave", avatar: "⚡", steps: 8100, streak: 2 },
+      { name: "Ebonj", house: "3306-B 5th Ave", avatar: "✨", steps: 6500, streak: 2 },
+      { name: "Hannah", house: "5th Ave", avatar: "🌟", steps: 5200, streak: 1 },
+      { name: "Jon", house: "3311 5th Ave", avatar: "🎯", steps: 7800, streak: 2 },
+      { name: "Julie", house: "3311 5th Ave", avatar: "🏆", steps: 11200, streak: 4 }
+    ];
 
-    let currentScope = 'week'; // 'week' or 'all'
-
-    function setScope(scope) {
-      currentScope = scope;
-      document.getElementById('scope-week').classList.toggle('active', scope === 'week');
-      document.getElementById('scope-all').classList.toggle('active', scope === 'all');
-      render();
+    function getUsers() {
+      const saved = localStorage.getItem("culdesac_stride_users_v2");
+      return saved ? JSON.parse(saved) : INITIAL_USERS;
     }
 
-    let currentLogType = 'loops';
-
-    const defaultState = {
-      walkers: [
-        { name: "Marcus", team: "Marcus", points: 0, loops: 0, steps: 0, avatar: "🏋️", role: "Coach" },
-        { name: "May", team: "May", points: 0, loops: 0, steps: 0, avatar: "☀️", role: "CMO" },
-        { name: "Dr. C", team: "Marcus", points: 0, loops: 0, steps: 0, avatar: "📚", role: "Strategist" },
-        { name: "Jon", team: "May", points: 0, loops: 0, steps: 0, avatar: "🎯", role: "Pace Keeper" },
-        { name: "Gromit", team: "May", points: 0, loops: 0, steps: 0, avatar: "🐾", role: "K9 Mascot" }
-      ],
-      feed: [
-        { text: "Welcome to Season 1 of the 5th Ave Stride League! Team Marcus vs Team May is officially live.", time: "Season Kickoff", author: "Coach Marcus" }
-      ]
-    };
-
-    function getWeekId(d = new Date()) {
-      const date = new Date(d);
-      const day = date.getDay(); // 0 is Sunday
-      const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Monday start
-      const monday = new Date(date.setDate(diff));
-      return monday.toISOString().slice(0, 10);
+    function saveUsers(users) {
+      localStorage.setItem("culdesac_stride_users_v2", JSON.stringify(users));
     }
 
-    function checkWeeklyReset(state) {
-      const currentWeek = getWeekId();
-      if (!state.activeWeek) {
-        state.activeWeek = currentWeek;
-        return state;
-      }
-      if (state.activeWeek !== currentWeek) {
-        let mPts = 0, yPts = 0;
-        state.walkers.forEach(w => {
-          if (w.team === 'Marcus') mPts += (w.points || 0);
-          else yPts += (w.points || 0);
-        });
-        const champ = mPts > yPts ? "Team Marcus 🏆" : (yPts > mPts ? "Team May 🏆" : "A Tie 🤝");
-        state.lastWinner = champ + " (" + Math.max(mPts, yPts) + " pts)";
-        state.feed.unshift({
-          text: "🔔 WEEK COMPLETE (Midnight Sunday Reset)! Last Week's Winner: " + state.lastWinner + ". Scores are reset to 0 for a brand new week!",
-          time: "Sunday Midnight",
-          author: "League Official"
-        });
-        state.walkers.forEach(w => {
-          w.points = 0;
-          w.loops = 0;
-          w.steps = 0;
-        });
-        state.activeWeek = currentWeek;
-      }
-      return state;
+    function setPreset(val) {
+      const input = document.getElementById("steps-input");
+      const current = parseInt(input.value) || 0;
+      input.value = current + val;
     }
 
-    function getState() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      let state = defaultState;
-      if (saved) {
-        try { state = JSON.parse(saved); } catch(e) { state = defaultState; }
-      }
-      return checkWeeklyReset(state);
-    }
+    function renderLeaderboard() {
+      const users = getUsers();
+      users.sort((a, b) => b.steps - a.steps);
 
-    function saveState(state) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      render();
-    }
+      const container = document.getElementById("leaderboard-list");
+      container.innerHTML = "";
 
-    function switchNav(view) {
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('view-dash').style.display = 'none';
-      document.getElementById('view-log').style.display = 'none';
-      document.getElementById('view-feed').style.display = 'none';
+      let totalCommunitySteps = 0;
 
-      if (view === 'dash') {
-        document.querySelectorAll('.nav-btn')[0].classList.add('active');
-        document.getElementById('view-dash').style.display = 'block';
-      } else if (view === 'log') {
-        document.querySelectorAll('.nav-btn')[1].classList.add('active');
-        document.getElementById('view-log').style.display = 'block';
-      } else if (view === 'feed') {
-        document.querySelectorAll('.nav-btn')[2].classList.add('active');
-        document.getElementById('view-feed').style.display = 'block';
-      }
-    }
+      users.forEach((u, idx) => {
+        totalCommunitySteps += u.steps;
+        const miles = (u.steps / 2000).toFixed(1);
+        const rankMedal = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : "#" + (idx + 1);
 
-    function switchSub(tab) {
-      document.querySelectorAll('.sub-btn').forEach(b => {
-        b.classList.remove('active');
-        b.classList.remove('green-active');
-      });
-      if (tab === 'team') {
-        document.getElementById('btn-sub-team').classList.add('active');
-        document.getElementById('dash-team').style.display = 'block';
-        document.getElementById('dash-indiv').style.display = 'none';
-      } else {
-        const indivBtn = document.getElementById('btn-sub-indiv');
-        indivBtn.classList.add('active');
-        indivBtn.classList.add('green-active');
-        document.getElementById('dash-team').style.display = 'none';
-        document.getElementById('dash-indiv').style.display = 'block';
-      }
-    }
-
-    function setSort(criterion) {
-      currentSort = criterion;
-      document.querySelectorAll('.sort-pill').forEach(p => p.classList.remove('active'));
-      document.getElementById('sort-' + criterion).classList.add('active');
-      renderIndividual();
-    }
-
-    
-    function checkNewWalker(val) {
-      document.getElementById('new-walker-box').style.display = (val === '__new__') ? 'block' : 'none';
-    }
-
-    function setLogType(type) {
-      currentLogType = type;
-      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('type-' + type).classList.add('active');
-      document.getElementById('group-loops').style.display = (type === 'loops') ? 'block' : 'none';
-      document.getElementById('group-gps').style.display = (type === 'gps') ? 'block' : 'none';
-      document.getElementById('group-steps').style.display = (type === 'steps') ? 'block' : 'none';
-    }
-
-    let gpsWatchId = null;
-    let gpsStartTime = null;
-    let gpsTimerInterval = null;
-    let gpsTotalDistance = 0; // meters
-    let gpsLastCoord = null;
-    let gpsLoopsDetected = 0;
-
-    function toggleGpsTracking() {
-      if (gpsWatchId) {
-        // Stop GPS
-        navigator.geolocation.clearWatch(gpsWatchId);
-        clearInterval(gpsTimerInterval);
-        gpsWatchId = null;
-        document.getElementById('btn-gps-start').innerText = "🟢 Start GPS Walk";
-        document.getElementById('btn-gps-start').style.background = "#10b981";
-        document.getElementById('gps-status').innerText = "Walk finished! Ready to submit points.";
-        // Automatically populate input-loops
-        document.getElementById('input-loops').value = Math.max(1, gpsLoopsDetected);
-      } else {
-        // Start GPS
-        if (!navigator.geolocation) return alert("GPS is not supported by your browser.");
-        gpsTotalDistance = 0;
-        gpsLastCoord = null;
-        gpsLoopsDetected = 0;
-        document.getElementById('gps-loops-count').innerText = "0";
-        document.getElementById('gps-distance').innerText = "0.00";
-        gpsStartTime = Date.now();
-        gpsTimerInterval = setInterval(updateGpsTimer, 1000);
-
-        document.getElementById('btn-gps-start').innerText = "🔴 Finish Walk & Bank Points";
-        document.getElementById('btn-gps-start').style.background = "#e53e3e";
-        document.getElementById('btn-gps-start').style.color = "#fff";
-        document.getElementById('gps-status').innerText = "📡 Tracking GPS active...";
-
-        gpsWatchId = navigator.geolocation.watchPosition(handleGpsPosition, handleGpsError, {
-          enableHighAccuracy: true,
-          maximumAge: 1000
-        });
-      }
-    }
-
-    function updateGpsTimer() {
-      const elapsed = Math.floor((Date.now() - gpsStartTime) / 1000);
-      const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
-      const secs = String(elapsed % 60).padStart(2, '0');
-      document.getElementById('gps-timer').innerText = mins + ":" + secs;
-    }
-
-    function handleGpsPosition(pos) {
-      const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
-      if (gpsLastCoord) {
-        const d = calcDistance(gpsLastCoord.lat, gpsLastCoord.lon, lat, lon);
-        if (d > 3) { // filter noise
-          gpsTotalDistance += d;
-          const miles = (gpsTotalDistance * 0.000621371).toFixed(2);
-          document.getElementById('gps-distance').innerText = miles;
-          // ~190 meters ≈ 0.12 miles per loop
-          const loops = Math.floor(gpsTotalDistance / 190);
-          if (loops > gpsLoopsDetected) {
-            gpsLoopsDetected = loops;
-            document.getElementById('gps-loops-count').innerText = gpsLoopsDetected;
-            // vibrate phone if supported
-            if (navigator.vibrate) navigator.vibrate(200);
-          }
-        }
-      }
-      gpsLastCoord = { lat, lon };
-    }
-
-    function calcDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371e3; // metres
-      const φ1 = lat1 * Math.PI/180;
-      const φ2 = lat2 * Math.PI/180;
-      const Δφ = (lat2-lat1) * Math.PI/180;
-      const Δλ = (lon2-lon1) * Math.PI/180;
-      const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
-    }
-
-    function handleGpsError(err) {
-      document.getElementById('gps-status').innerText = "GPS Note: " + err.message;
-    }
-
-
-    function submitLog() {
-      let name = document.getElementById('input-walker').value;
-      const note = document.getElementById('input-note').value.trim();
-      const state = getState();
-      let walker = state.walkers.find(w => w.name === name);
-      
-      if (name === '__new__') {
-        const customName = document.getElementById('new-walker-name').value.trim();
-        const customTeam = document.getElementById('new-walker-team').value;
-        if (!customName) return alert("Please enter the new walker's name.");
-        name = customName;
-        walker = state.walkers.find(w => w.name.toLowerCase() === name.toLowerCase());
-        if (!walker) {
-          walker = { name: name, team: customTeam, points: 0, loops: 0, steps: 0, avatar: "👟", role: "Neighbor", allPoints: 0, allLoops: 0, allSteps: 0 };
-          state.walkers.push(walker);
-          // add option to dropdown
-          const opt = document.createElement("option");
-          opt.value = name;
-          opt.text = name + " (Team " + customTeam + ")";
-          document.getElementById('input-walker').add(opt, document.getElementById('input-walker').options[document.getElementById('input-walker').options.length - 1]);
-        }
-      }
-      if (!walker) return;
-
-      let pts = 0;
-      let feedText = "";
-
-      if (currentLogType === 'loops') {
-        const loops = parseInt(document.getElementById('input-loops').value, 10) || 0;
-        if (loops <= 0) return alert("Please enter at least 1 loop.");
-        pts = loops;
-        walker.loops = (walker.loops || 0) + loops;
-        walker.points = (walker.points || 0) + pts;
-        walker.allLoops = (walker.allLoops || 0) + loops;
-        walker.allPoints = (walker.allPoints || 0) + pts;
-        feedText = name + " completed " + loops + " cul-de-sac loops! (" + pts + " pts banked for Team " + walker.team + ")";
-      } else {
-        const steps = parseInt(document.getElementById('input-steps').value, 10) || 0;
-        if (steps <= 0) return alert("Please enter your steps.");
-        pts = Math.round(steps / 1000);
-        walker.steps = (walker.steps || 0) + steps;
-        walker.points = (walker.points || 0) + pts;
-        walker.allSteps = (walker.allSteps || 0) + steps;
-        walker.allPoints = (walker.allPoints || 0) + pts;
-        feedText = name + " logged " + steps.toLocaleString() + " daily steps! (" + pts + " pts banked for Team " + walker.team + ")";
-      }
-
-      if (note) { feedText += ' — "' + note + '"'; }
-
-      const now = new Date();
-      const timeStr = now.toLocaleDateString([], { weekday: 'short' }) + " " + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      state.feed.unshift({ text: feedText, time: timeStr, author: name });
-      if (state.feed.length > 25) state.feed.pop();
-
-      saveState(state);
-      document.getElementById('input-note').value = "";
-      alert("Hustle recorded! Added " + pts + " points to Team " + walker.team + ".");
-      switchNav('dash');
-    }
-
-    function render() {
-      const state = getState();
-
-      // Team Aggregates
-      let mPts = 0, yPts = 0, mLoops = 0, yLoops = 0, mSteps = 0, ySteps = 0;
-      state.walkers.forEach(w => {
-        if (w.team === 'Marcus') {
-          mPts += (w.points || 0);
-          mLoops += (w.loops || 0);
-          mSteps += (w.steps || 0);
-        } else {
-          yPts += (w.points || 0);
-          yLoops += (w.loops || 0);
-          ySteps += (w.steps || 0);
-        }
+        const row = document.createElement("div");
+        row.className = "leaderboard-item";
+        row.innerHTML = `
+          <div class="rank-num">${rankMedal}</div>
+          <div class="avatar">${u.avatar}</div>
+          <div class="user-info">
+            <div class="user-name">${u.name} ${u.name === 'Marcus' ? '👑' : ''}</div>
+            <div class="user-sub">${u.house} • ${miles} miles • 🔥 ${u.streak}d streak</div>
+          </div>
+          <div class="score-block">
+            <div class="score-steps">${u.steps.toLocaleString()}</div>
+            <div class="score-label">Steps</div>
+          </div>
+        `;
+        container.appendChild(row);
       });
 
-      document.getElementById('score-marcus').innerText = mPts;
-      document.getElementById('detail-marcus').innerHTML = mLoops + " loops &bull; " + mSteps.toLocaleString() + " steps";
-      document.getElementById('score-may').innerText = yPts;
-      document.getElementById('detail-may').innerHTML = yLoops + " loops &bull; " + ySteps.toLocaleString() + " steps";
-
-      const total = mPts + yPts;
-      const mPct = total === 0 ? 50 : Math.max(10, Math.min(90, (mPts / total) * 100));
-      document.getElementById('bar-marcus').style.width = mPct + '%';
-      document.getElementById('bar-may').style.width = (100 - mPct) + '%';
-
-      const totLoops = mLoops + yLoops;
-      const totSteps = mSteps + ySteps;
-      const totMiles = ((totLoops * 0.12) + (totSteps / 2000)).toFixed(1);
-
-      document.getElementById('stat-total-loops').innerText = totLoops;
-      document.getElementById('stat-total-miles').innerText = totMiles;
-      document.getElementById('stat-total-steps').innerText = totSteps.toLocaleString();
-
-      renderIndividual();
-      renderFeed();
+      // Update Community Milestone Bar
+      document.getElementById("total-community-steps").innerText = totalCommunitySteps.toLocaleString() + " Steps";
+      const goal = 250000;
+      const pct = Math.min(100, Math.round((totalCommunitySteps / goal) * 100));
+      document.getElementById("community-bar").style.width = pct + "%";
+      document.getElementById("pct-goal").innerText = pct + "% of Goal";
+      document.getElementById("active-walkers-count").innerText = users.filter(u => u.steps > 0).length + " Neighbors Active";
     }
 
-    function renderIndividual() {
-      const state = getState();
-      const listEl = document.getElementById('walker-list');
-      const sorted = [...state.walkers].sort((a, b) => (b[currentSort] || 0) - (a[currentSort] || 0));
+    function submitSteps() {
+      const name = document.getElementById("user-select").value;
+      const input = document.getElementById("steps-input");
+      const stepsToAdd = parseInt(input.value);
 
-      listEl.innerHTML = sorted.map((w, i) => {
-        const medal = i === 0 ? "🥇" : (i === 1 ? "🥈" : (i === 2 ? "🥉" : (i + 1)));
-        const teamClass = w.team === 'Marcus' ? 'team-marcus' : 'team-may';
-        return '<div class="walker-row">' +
-          '<div class="rank-badge">' + medal + '</div>' +
-          '<div class="avatar">' + w.avatar + '</div>' +
-          '<div class="walker-info">' +
-            '<div class="walker-name">' + w.name + ' <span class="' + teamClass + '" style="font-size:0.7rem;">&bull; Team ' + w.team + '</span></div>' +
-            '<div class="walker-role">' + w.role + ' &bull; ' + (w.loops || 0) + ' loops &bull; ' + (w.steps || 0).toLocaleString() + ' steps</div>' +
-          '</div>' +
-          '<div class="walker-score">' +
-            '<div class="score-pts">' + (w[currentSort] || 0).toLocaleString() + '</div>' +
-            '<div class="score-detail">' + currentSort + '</div>' +
-          '</div>' +
-        '</div>';
-      }).join('');
-    }
+      if (!stepsToAdd || stepsToAdd <= 0) {
+        alert("Please enter or tap the preset buttons to add steps!");
+        return;
+      }
 
-    function renderFeed() {
-      const state = getState();
-      const feedEl = document.getElementById('feed-list');
-      feedEl.innerHTML = state.feed.map(item => 
-        '<div class="feed-item">' +
-          '<div>' + item.text + '</div>' +
-          '<div class="feed-meta"><span>By ' + item.author + '</span><span>' + item.time + '</span></div>' +
-        '</div>'
-      ).join('');
-    }
+      const users = getUsers();
+      const user = users.find(u => u.name === name);
+      if (user) {
+        user.steps += stepsToAdd;
+        user.streak += 1;
+        saveUsers(users);
+        renderLeaderboard();
+        input.value = "";
 
-    function resetAll() {
-      if (confirm("Are you sure you want to reset all scores to zero for a fresh season?")) {
-        localStorage.removeItem(STORAGE_KEY);
-        render();
-        alert("Season reset! All scores are zeroed out.");
+        // Show Toast
+        const toast = document.getElementById("toast");
+        toast.innerText = `🎉 Added ${stepsToAdd.toLocaleString()} steps for ${name}!`;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 3000);
       }
     }
 
-    // Initialize
-    render();
+    renderLeaderboard();
   </script>
 </body>
 </html>
