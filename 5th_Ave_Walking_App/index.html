@@ -11,6 +11,8 @@
     :root {
       --gold: #f59e0b;
       --gold-dark: #d97706;
+      --silver: #cbd5e1;
+      --bronze: #d97706;
       --accent-blue: #38bdf8;
       --accent-green: #10b981;
       --bg: #0b0f19;
@@ -20,7 +22,7 @@
       --text-muted: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 60px; }
 
     /* Header */
     header {
@@ -52,33 +54,76 @@
     }
     .subtitle { font-size: 13px; color: var(--text-muted); }
 
-    /* UNIFIED COMMUNITY MILESTONE */
-    .community-card {
+    /* WEEKLY CHAMPION PODIUM */
+    .podium-card {
       margin: 16px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(30, 41, 59, 0.9) 100%);
+      border: 2px solid rgba(245, 158, 11, 0.4);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+    }
+    .podium-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .podium-slots {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .podium-item {
+      flex: 1;
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px 6px;
+      text-align: center;
+    }
+    .podium-item.first {
+      background: linear-gradient(180deg, #1e293b 0%, rgba(245, 158, 11, 0.2) 100%);
+      border-color: var(--gold);
+      padding: 18px 8px;
+      transform: translateY(-8px);
+    }
+    .podium-avatar { font-size: 24px; margin-bottom: 4px; }
+    .podium-item.first .podium-avatar { font-size: 32px; }
+    .podium-name { font-size: 13px; font-weight: 800; color: #fff; }
+    .podium-steps { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+    .podium-medal { font-size: 14px; margin-top: 4px; }
+
+    /* COMMUNITY MILESTONE */
+    .community-card {
+      margin: 0 16px 20px;
       background: var(--card-bg);
       border-radius: 16px;
-      padding: 18px;
+      padding: 16px;
       border: 1px solid var(--card-border);
     }
     .community-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
-    .community-title { font-size: 14px; font-weight: 700; color: var(--accent-blue); }
-    .community-stat { font-size: 18px; font-weight: 800; color: #fff; }
+    .community-title { font-size: 13px; font-weight: 700; color: var(--accent-blue); }
+    .community-stat { font-size: 16px; font-weight: 800; color: #fff; }
     .progress-bar-bg {
-      height: 14px;
+      height: 12px;
       background: #1e293b;
       border-radius: 999px;
       overflow: hidden;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .progress-bar-fill {
       background: linear-gradient(90deg, #38bdf8, #10b981);
       height: 100%;
-      width: 45%;
       border-radius: 999px;
       transition: width 0.4s ease;
     }
@@ -134,11 +179,8 @@
       font-weight: 700;
       outline: none;
     }
-    select:focus, input[type="number"]:focus {
-      border-color: var(--gold);
-    }
+    select:focus, input[type="number"]:focus { border-color: var(--gold); }
 
-    /* Quick Step Preset Buttons */
     .preset-container {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -176,7 +218,7 @@
       cursor: pointer;
       margin-top: 10px;
       box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
-      transition: transform 0.1s, box-shadow 0.2s;
+      transition: transform 0.1s;
     }
     .btn-submit:active { transform: scale(0.98); }
 
@@ -200,17 +242,16 @@
       border-radius: 14px;
       padding: 14px 16px;
       margin-bottom: 10px;
-      transition: transform 0.2s;
     }
     .rank-num {
       width: 28px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
       color: var(--gold);
     }
     .avatar {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -224,10 +265,21 @@
     .user-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
     .user-sub { font-size: 12px; color: var(--text-muted); font-weight: 500; }
     .score-block { text-align: right; }
-    .score-steps { font-size: 17px; font-weight: 800; color: #fff; }
-    .score-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+    .score-steps { font-size: 16px; font-weight: 800; color: #fff; }
+    .score-label { font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
 
-    /* Success Toast */
+    /* PAST WEEKLY CHAMPIONS ACCORDION */
+    .history-card {
+      margin: 20px 16px 0;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .history-title { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .history-item { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); padding: 6px 0; border-bottom: 1px solid #1e293b; }
+    .history-item:last-child { border-bottom: none; }
+
     .toast {
       position: fixed;
       bottom: 20px;
@@ -251,13 +303,21 @@
   <header>
     <div class="badge">Cul-de-Sac Walking Club • Est. 2026</div>
     <h1>5th Ave Walking Club</h1>
-    <p class="subtitle">Community Walking & Fitness Challenge</p>
+    <p class="subtitle">United Neighborhood Fitness Challenge</p>
   </header>
+
+  <!-- LIVE WEEKLY PODIUM (INDIVIDUAL TOP 3) -->
+  <div class="podium-card">
+    <div class="podium-badge">🏆 Current Week Podium (Ends Sunday Midnight)</div>
+    <div class="podium-slots" id="podium-display">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
 
   <!-- UNIFIED COMMUNITY MILESTONE -->
   <div class="community-card">
     <div class="community-header">
-      <span class="community-title">🌟 Walking Club Weekly Milestone</span>
+      <span class="community-title">🌟 Cul-de-Sac Weekly Goal</span>
       <span class="community-stat" id="total-community-steps">0 Steps</span>
     </div>
     <div class="progress-bar-bg">
@@ -273,7 +333,7 @@
   <!-- PROMINENT OBVIOUS STEP LOGGING CARD -->
   <div class="log-card">
     <div class="log-title">⚡ LOG YOUR STEPS TODAY</div>
-    <div class="log-sub">Select your name and record your steps to move up the leaderboard!</div>
+    <div class="log-sub">Select your name and record your steps to climb the leaderboard!</div>
 
     <div class="form-group">
       <label>1. Select Your Name</label>
@@ -309,44 +369,54 @@
     <button class="btn-submit" onclick="submitSteps()">RECORD MY STEPS 🚀</button>
   </div>
 
-  <!-- INDIVIDUAL STREET LEADERBOARD -->
+  <!-- COMPLETE LEADERBOARD -->
   <div class="section-title">
-    <span>🏆 Walking Club Leaderboard</span>
-    <span style="font-size:11px; color:#38bdf8;">Updated Live</span>
+    <span>🏆 Individual Street Rankings</span>
+    <span style="font-size:11px; color:#38bdf8;">14 Walkers Active</span>
   </div>
 
-  <div class="leaderboard-container" id="leaderboard-list">
-    <!-- Populated dynamically -->
+  <div class="leaderboard-container" id="leaderboard-list"></div>
+
+  <!-- PAST WEEKLY WINNERS WALL -->
+  <div class="history-card">
+    <div class="history-title">🎖️ Weekly Champions Hall of Fame</div>
+    <div class="history-item">
+      <span>Week 1 Winner (Kickoff)</span>
+      <span style="color:#f59e0b; font-weight:700;">Marcus 👑 (42,500 Steps)</span>
+    </div>
+    <div class="history-item">
+      <span>Week 2 Race</span>
+      <span style="color:#10b981; font-weight:700;">In Progress (Current: May 🔥)</span>
+    </div>
   </div>
 
   <div class="toast" id="toast">🎉 Steps Recorded! Keep Striding!</div>
 
   <script>
-    // Complete 14-neighbor roster, first names only, zero house numbers, zero street addresses
     const INITIAL_USERS = [
-      { name: "Marcus", avatar: "👑", steps: 14200, streak: 4 },
       { name: "May", avatar: "🔥", steps: 16800, streak: 5 },
+      { name: "Marcus", avatar: "👑", steps: 14200, streak: 4 },
+      { name: "Julie", avatar: "🏆", steps: 11200, streak: 4 },
       { name: "Kelly", avatar: "⭐", steps: 9400, streak: 3 },
-      { name: "Hannah", avatar: "🌟", steps: 5200, streak: 1 },
-      { name: "Scott", avatar: "⚡", steps: 7600, streak: 2 },
-      { name: "Dae", avatar: "🚀", steps: 8100, streak: 2 },
-      { name: "Eboni", avatar: "✨", steps: 6500, streak: 2 },
-      { name: "Jan", avatar: "🏃", steps: 4800, streak: 1 },
       { name: "Tre", avatar: "💪", steps: 8900, streak: 3 },
-      { name: "Dominque", avatar: "🎯", steps: 5900, streak: 2 },
+      { name: "Dae", avatar: "🚀", steps: 8100, streak: 2 },
+      { name: "Scott", avatar: "⚡", steps: 7600, streak: 2 },
+      { name: "Eboni", avatar: "✨", steps: 6500, streak: 2 },
       { name: "Nicolle", avatar: "🌸", steps: 6200, streak: 2 },
+      { name: "Dominque", avatar: "🎯", steps: 5900, streak: 2 },
+      { name: "Hannah", avatar: "🌟", steps: 5200, streak: 1 },
+      { name: "Jan", avatar: "🏃", steps: 4800, streak: 1 },
       { name: "Robin", avatar: "🌿", steps: 4500, streak: 1 },
-      { name: "Lula", avatar: "🐾", steps: 3800, streak: 1 },
-      { name: "Julie", avatar: "🏆", steps: 11200, streak: 4 }
+      { name: "Lula", avatar: "🐾", steps: 3800, streak: 1 }
     ];
 
     function getUsers() {
-      const saved = localStorage.getItem("culdesac_stride_users_v4");
+      const saved = localStorage.getItem("culdesac_walking_users_v5");
       return saved ? JSON.parse(saved) : INITIAL_USERS;
     }
 
     function saveUsers(users) {
-      localStorage.setItem("culdesac_stride_users_v4", JSON.stringify(users));
+      localStorage.setItem("culdesac_walking_users_v5", JSON.stringify(users));
     }
 
     function setPreset(val) {
@@ -355,17 +425,46 @@
       input.value = current + val;
     }
 
-    function renderLeaderboard() {
+    function renderApp() {
       const users = getUsers();
       users.sort((a, b) => b.steps - a.steps);
 
+      // 1. Render Podium (Top 3)
+      const podium = document.getElementById("podium-display");
+      if (users.length >= 3) {
+        const first = users[0];
+        const second = users[1];
+        const third = users[2];
+
+        podium.innerHTML = `
+          <div class="podium-item">
+            <div class="podium-medal">🥈 2nd</div>
+            <div class="podium-avatar">${second.avatar}</div>
+            <div class="podium-name">${second.name}</div>
+            <div class="podium-steps">${second.steps.toLocaleString()}</div>
+          </div>
+          <div class="podium-item first">
+            <div class="podium-medal">🥇 1st Place</div>
+            <div class="podium-avatar">${first.avatar}</div>
+            <div class="podium-name">${first.name} ${first.name === 'Marcus' ? '👑' : ''}</div>
+            <div class="podium-steps" style="color:#f59e0b; font-weight:700;">${first.steps.toLocaleString()} Steps</div>
+          </div>
+          <div class="podium-item">
+            <div class="podium-medal">🥉 3rd</div>
+            <div class="podium-avatar">${third.avatar}</div>
+            <div class="podium-name">${third.name}</div>
+            <div class="podium-steps">${third.steps.toLocaleString()}</div>
+          </div>
+        `;
+      }
+
+      // 2. Render Full List
       const container = document.getElementById("leaderboard-list");
       container.innerHTML = "";
-
-      let totalCommunitySteps = 0;
+      let totalSteps = 0;
 
       users.forEach((u, idx) => {
-        totalCommunitySteps += u.steps;
+        totalSteps += u.steps;
         const miles = (u.steps / 2000).toFixed(1);
         const rankMedal = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : "#" + (idx + 1);
 
@@ -386,10 +485,10 @@
         container.appendChild(row);
       });
 
-      // Update Community Milestone Bar
-      document.getElementById("total-community-steps").innerText = totalCommunitySteps.toLocaleString() + " Steps";
+      // 3. Milestone Goal
+      document.getElementById("total-community-steps").innerText = totalSteps.toLocaleString() + " Steps";
       const goal = 350000;
-      const pct = Math.min(100, Math.round((totalCommunitySteps / goal) * 100));
+      const pct = Math.min(100, Math.round((totalSteps / goal) * 100));
       document.getElementById("community-bar").style.width = pct + "%";
       document.getElementById("pct-goal").innerText = pct + "% of Goal";
       document.getElementById("active-walkers-count").innerText = users.filter(u => u.steps > 0).length + " Walkers Active";
@@ -411,10 +510,9 @@
         user.steps += stepsToAdd;
         user.streak += 1;
         saveUsers(users);
-        renderLeaderboard();
+        renderApp();
         input.value = "";
 
-        // Show Toast
         const toast = document.getElementById("toast");
         toast.innerText = `🎉 Added ${stepsToAdd.toLocaleString()} steps for ${name}!`;
         toast.classList.add("show");
@@ -422,7 +520,7 @@
       }
     }
 
-    renderLeaderboard();
+    renderApp();
   </script>
 </body>
 </html>
