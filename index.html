@@ -393,7 +393,9 @@
   <div class="toast" id="toast">🎉 Steps Recorded! Keep Striding!</div>
 
   <script>
-        const INITIAL_USERS = [
+    const FIREBASE_DB_URL = "https://fifth-ave-walking-club-default-rtdb.firebaseio.com/users.json";
+
+    const INITIAL_USERS = [
       { name: "Marcus", avatar: "👑", steps: 0, streak: 0 },
       { name: "May", avatar: "🔥", steps: 0, streak: 0 },
       { name: "Julie", avatar: "🏆", steps: 0, streak: 0 },
@@ -410,13 +412,33 @@
       { name: "Lula", avatar: "🐾", steps: 0, streak: 0 }
     ];
 
-    function getUsers() {
+    let currentUsers = INITIAL_USERS;
+
+    function getLocalUsers() {
       const saved = localStorage.getItem("culdesac_walking_users_v6");
       return saved ? JSON.parse(saved) : INITIAL_USERS;
     }
 
-    function saveUsers(users) {
+    function saveLocalUsers(users) {
       localStorage.setItem("culdesac_walking_users_v6", JSON.stringify(users));
+    }
+
+    async function syncFromCloud() {
+      try {
+        const res = await fetch(FIREBASE_DB_URL);
+        if (res.ok) {
+          const cloudUsers = await res.json();
+          if (Array.isArray(cloudUsers) && cloudUsers.length > 0) {
+            currentUsers = cloudUsers;
+            saveLocalUsers(cloudUsers);
+            renderApp(currentUsers);
+            const liveBadge = document.getElementById("live-sync-indicator");
+            if (liveBadge) liveBadge.innerText = "🟢 Live Synced";
+          }
+        }
+      } catch (err) {
+        console.warn("Cloud sync offline, using local cache:", err);
+      }
     }
 
     function setPreset(val) {
@@ -425,8 +447,8 @@
       input.value = current + val;
     }
 
-    function renderApp() {
-      const users = getUsers();
+    function renderApp(usersToRender) {
+      const users = [...(usersToRender || currentUsers)];
       users.sort((a, b) => b.steps - a.steps);
 
       // 1. Render Podium (Top 3)
@@ -494,7 +516,7 @@
       document.getElementById("active-walkers-count").innerText = users.filter(u => u.steps > 0).length + " Walkers Active";
     }
 
-    function submitSteps() {
+    async function submitSteps() {
       const name = document.getElementById("user-select").value;
       const input = document.getElementById("steps-input");
       const stepsToAdd = parseInt(input.value);
@@ -504,23 +526,54 @@
         return;
       }
 
-      const users = getUsers();
-      const user = users.find(u => u.name === name);
+      // Fetch latest from cloud first to avoid overwriting another neighbor's walk
+      try {
+        const res = await fetch(FIREBASE_DB_URL);
+        if (res.ok) {
+          const fresh = await res.json();
+          if (Array.isArray(fresh)) currentUsers = fresh;
+        }
+      } catch (e) {}
+
+      const user = currentUsers.find(u => u.name === name);
       if (user) {
         user.steps += stepsToAdd;
         user.streak += 1;
-        saveUsers(users);
-        renderApp();
+        saveLocalUsers(currentUsers);
+        renderApp(currentUsers);
         input.value = "";
 
         const toast = document.getElementById("toast");
-        toast.innerText = `🎉 Added ${stepsToAdd.toLocaleString()} steps for ${name}!`;
+        toast.innerText = `🎉 Added ${stepsToAdd.toLocaleString()} steps for ${name}! Syncing...`;
         toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 3000);
+
+        try {
+          await fetch(FIREBASE_DB_URL, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(currentUsers)
+          });
+          toast.innerText = `🎉 Added ${stepsToAdd.toLocaleString()} steps for ${name}! Synced live to cul-de-sac!`;
+        } catch (err) {
+          console.error("Save error:", err);
+        }
+
+        setTimeout(() => toast.classList.remove("show"), 3500);
       }
     }
 
-    renderApp();
+    // Initialize with local cache first for instant display
+    currentUsers = getLocalUsers();
+    renderApp(currentUsers);
+
+    // Then pull live cloud data
+    syncFromCloud();
+
+    // Auto-sync every 15 seconds so live walks appear without manual refresh
+    setInterval(syncFromCloud, 15000);
+
+    // Also sync whenever the user switches back to this tab
+    window.addEventListener("focus", syncFromCloud);
   </script>
 </body>
 </html>
