@@ -704,50 +704,12 @@
       }
     }
 
-    let honkCtx = null;
+    const realFlamingoAudio = new Audio('flamingo_honk.m4a');
+    realFlamingoAudio.preload = 'auto';
 
-    function playFlamingoHonk() {
-      try {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) return;
-        if (!honkCtx) honkCtx = new AudioContext();
-        if (honkCtx.state === 'suspended') honkCtx.resume();
-
-        const now = honkCtx.currentTime;
-
-        // Two brassy oscillators: rich sawtooth + punchy triangle (authentic horn/honk buzz)
-        const osc1 = honkCtx.createOscillator();
-        const osc2 = honkCtx.createOscillator();
-        const gain = honkCtx.createGain();
-
-        osc1.type = 'sawtooth';
-        osc2.type = 'triangle';
-
-        // Downward horn scoop: 360Hz -> 310Hz & 530Hz -> 460Hz (classic brassy honk)
-        osc1.frequency.setValueAtTime(360, now);
-        osc1.frequency.exponentialRampToValueAtTime(300, now + 0.35);
-
-        osc2.frequency.setValueAtTime(530, now);
-        osc2.frequency.exponentialRampToValueAtTime(450, now + 0.35);
-
-        // Punchy attack, loud sustained honk body, crisp cutoff
-        gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.35, now + 0.02);
-        gain.gain.setValueAtTime(0.35, now + 0.28);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
-
-        osc1.connect(gain);
-        osc2.connect(gain);
-        gain.connect(honkCtx.destination);
-
-        osc1.start(now);
-        osc2.start(now);
-        osc1.stop(now + 0.40);
-        osc2.stop(now + 0.40);
-      } catch (err) {
-        console.log('Honk error:', err);
-      }
-    }
+    // Preload & unlock on mobile touch/click
+    document.addEventListener('touchstart', () => { realFlamingoAudio.load(); }, { once: true });
+    document.addEventListener('click', () => { realFlamingoAudio.load(); }, { once: true });
 
     const TINNYROSE_QUOTES = [
       "HONK! 🦩 Madam TinnyRose has spoken from the grill!",
@@ -759,7 +721,15 @@
     ];
 
     function cycleTinnyRoseCheer() {
-      playFlamingoHonk();
+      try {
+        realFlamingoAudio.currentTime = 0;
+        const p = realFlamingoAudio.play();
+        if (p !== undefined) {
+          p.catch(err => console.log('Audio playback prevented:', err));
+        }
+      } catch (err) {
+        console.log('Playback error:', err);
+      }
 
       const quote = TINNYROSE_QUOTES[Math.floor(Math.random() * TINNYROSE_QUOTES.length)];
       const bubble = document.getElementById("mascot-speech");
