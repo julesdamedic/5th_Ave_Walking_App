@@ -2,19 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Cul-de-Sac Walking Club</title>
+  <title>5th Ave Walking Club • The Flamboyance</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <style>
     :root {
       --gold: #f59e0b;
       --gold-dark: #d97706;
-      --silver: #cbd5e1;
-      --bronze: #d97706;
       --accent-blue: #38bdf8;
       --accent-green: #10b981;
+      --accent-pink: #f43f82;
       --bg: #0b0f19;
       --card-bg: #151d2f;
       --card-border: #243049;
@@ -24,7 +27,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding-bottom: 60px; }
 
-    /* Header */
     header {
       background: linear-gradient(180deg, #151d2f 0%, #0b0f19 100%);
       padding: 24px 16px 16px;
@@ -54,53 +56,59 @@
     }
     .subtitle { font-size: 13px; color: var(--text-muted); }
 
-    /* WEEKLY CHAMPION PODIUM */
-    .podium-card {
+    .dispatch-card {
       margin: 16px;
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(30, 41, 59, 0.9) 100%);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(21, 29, 47, 0.95) 100%);
       border: 2px solid rgba(245, 158, 11, 0.4);
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 16px;
-      text-align: center;
-    }
-    .podium-badge {
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-    }
-    .podium-slots {
       display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 12px;
-      margin-bottom: 8px;
+      gap: 16px;
+      align-items: center;
     }
-    .podium-item {
-      flex: 1;
+    .mascot-avatar {
+      width: 90px;
+      height: 95px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
       background: #1e293b;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25);
+      overflow: hidden;
+    }
+    .mascot-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .dispatch-content { flex: 1; }
+    .dispatch-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+    .dispatch-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .dispatch-bubble {
+      background: #0b0f19;
       border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 12px 6px;
-      text-align: center;
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.4;
     }
-    .podium-item.first {
-      background: linear-gradient(180deg, #1e293b 0%, rgba(16, 185, 129, 0.2) 100%);
-      border-color: var(--gold);
-      padding: 18px 8px;
-      transform: translateY(-8px);
-    }
-    .podium-avatar { font-size: 24px; margin-bottom: 4px; }
-    .podium-item.first .podium-avatar { font-size: 32px; }
-    .podium-name { font-size: 13px; font-weight: 800; color: #fff; }
-    .podium-steps { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
-    .podium-medal { font-size: 14px; margin-top: 4px; }
+    .dispatch-bubble span { color: var(--accent-blue); font-weight: 600; }
 
-    /* COMMUNITY MILESTONE */
     .community-card {
-      margin: 0 16px 20px;
+      margin: 0 16px 16px;
       background: var(--card-bg);
       border-radius: 16px;
       padding: 16px;
@@ -135,30 +143,50 @@
       font-weight: 600;
     }
 
-    /* PROMINENT LOG STEPS CARD */
+    .trailblazer-card {
+      margin: 0 16px 16px;
+      background: linear-gradient(135deg, rgba(244, 63, 130, 0.12) 0%, rgba(21, 29, 47, 0.95) 100%);
+      border: 1px solid rgba(244, 63, 130, 0.4);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tb-left { display: flex; align-items: center; gap: 10px; }
+    .tb-badge {
+      background: var(--accent-pink);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .tb-name { font-size: 14px; font-weight: 800; color: #fff; }
+    .tb-stat { font-size: 13px; font-weight: 700; color: #fb7185; }
+
     .log-card {
       margin: 0 16px 20px;
       background: linear-gradient(135deg, #1e293b 0%, #151d2f 100%);
       border: 2px solid var(--gold);
       border-radius: 18px;
-      padding: 20px;
+      padding: 18px;
       box-shadow: 0 8px 24px rgba(245, 158, 11, 0.15);
     }
     .log-title {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 800;
       color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
       margin-bottom: 4px;
     }
     .log-sub {
       font-size: 12px;
       color: var(--text-muted);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
-    .form-group { margin-bottom: 14px; }
+    .form-group { margin-bottom: 12px; }
     label {
       display: block;
       font-size: 11px;
@@ -222,9 +250,8 @@
     }
     .btn-submit:active { transform: scale(0.98); }
 
-    /* LEADERBOARD LIST */
     .section-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
       color: var(--text-muted);
       text-transform: uppercase;
@@ -240,81 +267,193 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      transition: transform 0.2s;
     }
     .rank-num {
-      width: 28px;
-      font-size: 17px;
+      width: 32px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--gold);
     }
     .avatar {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 18px;
       margin-right: 12px;
       background: #1e293b;
-      border: 2px solid var(--card-border);
+      border: 1px solid var(--card-border);
     }
     .user-info { flex: 1; }
-    .user-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
-    .user-sub { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .user-name { font-weight: 800; font-size: 15px; margin-bottom: 2px; color: #fff; }
+    .user-persona { font-size: 12px; color: var(--accent-pink); font-weight: 600; }
     .score-block { text-align: right; }
-    .score-steps { font-size: 16px; font-weight: 800; color: #fff; }
+    .score-steps { font-size: 17px; font-weight: 800; color: #fff; }
     .score-label { font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
-
-    /* PAST WEEKLY CHAMPIONS ACCORDION */
-    .history-card {
-      margin: 20px 16px 0;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 16px;
-    }
-    .history-title { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-    .history-item { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); padding: 6px 0; border-bottom: 1px solid #1e293b; }
-    .history-item:last-child { border-bottom: none; }
 
     .toast {
       position: fixed;
       bottom: 20px;
       left: 50%;
-      transform: translateX(-50%) translateY(100px);
+      transform: translateX(-50%) translateY(120px);
       background: #10b981;
       color: #fff;
-      font-weight: 800;
-      padding: 12px 24px;
+      font-weight: 700;
+      padding: 14px 24px;
       border-radius: 999px;
       box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
       transition: transform 0.3s ease;
       z-index: 1000;
-      font-size: 14px;
+      font-size: 13px;
+      text-align: center;
+      max-width: 90%;
+      pointer-events: none;
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      padding: 24px 16px;
+      overflow-y: auto;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .celebration-box {
+      background: linear-gradient(180deg, #1e293b 0%, #151d2f 100%);
+      border: 2px solid var(--gold);
+      border-radius: 24px;
+      padding: 24px 20px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(245, 158, 11, 0.3);
+      position: relative;
+    }
+    .cel-avatar {
+      width: 120px;
+      height: 125px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      border: 4px solid var(--gold);
+      background: #1e293b;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+    }
+    .cel-avatar img { width: 100%; height: 100%; object-fit: contain; }
+    .cel-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .cel-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .cel-podium {
+      background: #0b0f19;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 12px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .cel-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid #1e293b;
+      font-size: 13px;
+    }
+    .cel-row:last-child { border-bottom: none; }
+    .cel-row-left { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #fff; }
+    .cel-row-right { font-weight: 800; color: var(--gold); font-size: 12px; }
+    .btn-celebrate {
+      width: 100%;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #0b0f19;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+    }
   </style>
 </head>
 <body>
 
+  <div class="modal-overlay" id="celebration-modal">
+    <div class="celebration-box">
+      <div class="cel-avatar">
+        <img src="madam_tinnyrose_wearing_kicks.png" alt="Madam TinnyRose">
+      </div>
+      <div class="cel-tag">🧳 MADAM TINNYROSE HAS PACKED HER BAGS! 🌹</div>
+      <div class="cel-title" id="cel-headline">Week Concluded! New Porch Home Announced!</div>
+
+      <div class="cel-podium">
+        <div class="cel-row">
+          <div class="cel-row-left">🥇 1st Place (Grand Champion)</div>
+          <div class="cel-row-right" id="cel-first-place">Hannah (Flamingo • 58,842 steps)</div>
+        </div>
+        <div class="cel-row">
+          <div class="cel-row-left">🥈 2nd Place</div>
+          <div class="cel-row-right" id="cel-second-place">Marcus (Flamingo • 49,503 steps)</div>
+        </div>
+        <div class="cel-row">
+          <div class="cel-row-left">🥉 3rd Place</div>
+          <div class="cel-row-right" id="cel-third-place">Lula (Flamingo • 47,572 steps)</div>
+        </div>
+        
+      </div>
+
+      <button class="btn-celebrate" onclick="closeCelebration()">START NEW WEEK OF STRIDING! 🚀</button>
+    </div>
+  </div>
+
   <header>
-    <div class="badge">Cul-de-Sac Walking Club • Est. 2026</div>
+    <div class="badge">5TH AVE CUL-DE-SAC • THE FLAMBOYANCE</div>
     <h1>5th Ave Walking Club</h1>
     <p class="subtitle">United Neighborhood Fitness Challenge</p>
   </header>
 
-  <!-- LIVE WEEKLY PODIUM (INDIVIDUAL TOP 3) -->
-  <div class="podium-card">
-    <div class="podium-badge">🏆 Current Week Podium (Ends Sunday Midnight)</div>
-    <div class="podium-slots" id="podium-display">
-      <!-- Injected dynamically -->
+  <div class="dispatch-card">
+    <div class="mascot-avatar">
+      <img src="madam_tinnyrose_wearing_kicks.png" alt="Madam TinnyRose">
+    </div>
+    <div class="dispatch-content">
+      <div class="dispatch-tag">🏆 WEEKLY DISPATCH</div>
+      <div class="dispatch-title">Madam TinnyRose's Porch Forecast</div>
+      <div class="dispatch-bubble" id="mascot-speech">
+        “River City strides! 5th Ave is moving today—<span>every single step lifts the flock closer to our goal!</span>”
+      </div>
+    <div style="text-align: center; margin-top: 10px;">
+        <button type="button" onclick="openCelebration()" style="background: rgba(245, 158, 11, 0.2); border: 1px solid var(--gold); color: var(--gold); font-size: 11px; font-weight: 800; padding: 6px 14px; border-radius: 999px; cursor: pointer;">🏆 REPLAY WEEK 2 WINNERS & CONFETTI 🎉</button>
+      </div>
     </div>
   </div>
 
-  <!-- UNIFIED COMMUNITY MILESTONE -->
   <div class="community-card">
     <div class="community-header">
       <span class="community-title">🌟 Cul-de-Sac Weekly Goal</span>
@@ -324,34 +463,35 @@
       <div class="progress-bar-fill" id="community-bar" style="width: 0%;"></div>
     </div>
     <div class="community-meta">
-      <span id="active-walkers-count">0 Walkers Active</span>
+      <span id="active-walkers-count">14 Flamingos in the Flock</span>
       <span>GOAL: 350,000 STEPS</span>
       <span id="pct-goal">0%</span>
     </div>
   </div>
 
-  <!-- PROMINENT OBVIOUS STEP LOGGING CARD -->
+  
+
   <div class="log-card">
     <div class="log-title">⚡ LOG YOUR STEPS TODAY</div>
-    <div class="log-sub">Select your name and record your steps to climb the leaderboard!</div>
+    <div class="log-sub">Select your name and record your walk to move up the street leaderboard!</div>
 
     <div class="form-group">
       <label>1. Select Your Name</label>
       <select id="user-select">
-        <option value="Marcus">👑 Marcus</option>
-        <option value="May">🔥 May</option>
-        <option value="Kelly">⭐ Kelly</option>
-        <option value="Hannah">🌟 Hannah</option>
-        <option value="Scott">⚡ Scott</option>
-        <option value="Dae">🚀 Dae</option>
-        <option value="Eboni">✨ Eboni</option>
-        <option value="Jan">🏃 Jan</option>
-        <option value="Tre">💪 Tre</option>
-        <option value="Dominque">🎯 Dominque</option>
-        <option value="Nicolle">🌸 Nicolle</option>
-        <option value="Robin">🌿 Robin</option>
-        <option value="Lula">🐾 Lula</option>
-        <option value="Julie">🏆 Julie</option>
+        <option value="Marcus">👑 Marcus (Royal Flamingo)</option>
+        <option value="May">🔥 May (Fiery Flamingo)</option>
+        <option value="Julie">🏆 Julie (Champion Flamingo)</option>
+        <option value="Hannah">⚡ Hannah (Flamingo • 58,842 steps)</option>
+        <option value="Scott">🕶️ Lula (Flamingo • 47,572 steps)</option>
+        <option value="Kelly">⭐ Kelly (Star Flamingo)</option>
+        <option value="Eboni">✨ Eboni (Sparkle Flamingo)</option>
+        <option value="Tre">💪 Tre (Power Flamingo)</option>
+        <option value="Dae">🚀 Dae (Rocket Flamingo)</option>
+        <option value="Nicolle">🌸 Nicolle (Bloom Flamingo)</option>
+        <option value="Dominque">🎯 Dominque (Target Flamingo)</option>
+        <option value="Jan">🏃 Jan (Stride Flamingo)</option>
+        <option value="Robin">🌿 Robin (Garden Flamingo)</option>
+        <option value="Lula">🌺 Marcus (Flamingo • 49,503 steps)</option>
       </select>
     </div>
 
@@ -369,26 +509,12 @@
     <button class="btn-submit" onclick="submitSteps()">RECORD MY STEPS 🚀</button>
   </div>
 
-  <!-- COMPLETE LEADERBOARD -->
   <div class="section-title">
-    <span>🏆 Individual Street Rankings</span>
-    <span style="font-size:11px; color:#38bdf8;">14 Walkers Active</span>
+    <span>🏆 The Flamboyance Leaderboard</span>
+    <span style="font-size:11px; color:#f59e0b;">Ends Saturday Midnight</span>
   </div>
 
   <div class="leaderboard-container" id="leaderboard-list"></div>
-
-  <!-- PAST WEEKLY WINNERS WALL -->
-  <div class="history-card">
-    <div class="history-title">🎖️ Weekly Champions Hall of Fame</div>
-    <div class="history-item">
-      <span>Week 1 Winner (Kickoff)</span>
-      <span style="color:#f59e0b; font-weight:700;">Marcus 👑 (42,500 Steps)</span>
-    </div>
-    <div class="history-item">
-      <span>Week 2 Race</span>
-      <span style="color:#10b981; font-weight:700;">In Progress (Current: May 🔥)</span>
-    </div>
-  </div>
 
   <div class="toast" id="toast">🎉 Steps Recorded! Keep Striding!</div>
 
@@ -396,31 +522,40 @@
     const FIREBASE_DB_URL = "https://fifth-ave-walking-club-default-rtdb.firebaseio.com/users.json";
 
     const INITIAL_USERS = [
-      { name: "Marcus", avatar: "👑", steps: 0, streak: 0 },
-      { name: "May", avatar: "🔥", steps: 0, streak: 0 },
-      { name: "Julie", avatar: "🏆", steps: 0, streak: 0 },
-      { name: "Kelly", avatar: "⭐", steps: 0, streak: 0 },
-      { name: "Tre", avatar: "💪", steps: 0, streak: 0 },
-      { name: "Dae", avatar: "🚀", steps: 0, streak: 0 },
-      { name: "Scott", avatar: "⚡", steps: 0, streak: 0 },
-      { name: "Eboni", avatar: "✨", steps: 0, streak: 0 },
-      { name: "Nicolle", avatar: "🌸", steps: 0, streak: 0 },
-      { name: "Dominque", avatar: "🎯", steps: 0, streak: 0 },
-      { name: "Hannah", avatar: "🌟", steps: 0, streak: 0 },
-      { name: "Jan", avatar: "🏃", steps: 0, streak: 0 },
-      { name: "Robin", avatar: "🌿", steps: 0, streak: 0 },
-      { name: "Lula", avatar: "🐾", steps: 0, streak: 0 }
+      { name: "Hannah", persona: "Speedy Flamingo", avatar: "⚡", steps: 0, streak: 0 },
+      { name: "Lula", persona: "Sunny Flamingo", avatar: "🌺", steps: 0, streak: 0 },
+      { name: "Scott", persona: "Cool Flamingo", avatar: "🕶️", steps: 0, streak: 0 },
+      { name: "May", persona: "Fiery Flamingo", avatar: "🔥", steps: 0, streak: 0 },
+      { name: "Eboni", persona: "Sparkle Flamingo", avatar: "✨", steps: 0, streak: 0 },
+      { name: "Marcus", persona: "Royal Flamingo", avatar: "👑", steps: 0, streak: 0 },
+      { name: "Julie", persona: "Champion Flamingo", avatar: "🏆", steps: 0, streak: 0 },
+      { name: "Kelly", persona: "Star Flamingo", avatar: "⭐", steps: 0, streak: 0 },
+      { name: "Tre", persona: "Power Flamingo", avatar: "💪", steps: 0, streak: 0 },
+      { name: "Dae", persona: "Rocket Flamingo", avatar: "🚀", steps: 0, streak: 0 },
+      { name: "Nicolle", persona: "Bloom Flamingo", avatar: "🌸", steps: 0, streak: 0 },
+      { name: "Jan", persona: "Stride Flamingo", avatar: "🏃", steps: 0, streak: 0 },
+      { name: "Dominque", persona: "Target Flamingo", avatar: "🎯", steps: 0, streak: 0 },
+      { name: "Robin", persona: "Garden Flamingo", avatar: "🌿", steps: 0, streak: 0 }
+    ];
+
+    const RICHMOND_CHEERS = [
+      "River City strides! 5th Ave is moving today!",
+      "Crisp Richmond air and fresh strides—perfection!",
+      "Madam TinnyRose loves seeing the neighborhood out and about!",
+      "Boom! Another walk in the books for the Flamboyance!",
+      "Every single step lifts the flock closer to our community goal!",
+      "Madam TinnyRose felt that stride! Keep pacing 5th Ave!"
     ];
 
     let currentUsers = INITIAL_USERS;
 
     function getLocalUsers() {
-      const saved = localStorage.getItem("culdesac_walking_users_v6");
+      const saved = localStorage.getItem("culdesac_walking_users_v7");
       return saved ? JSON.parse(saved) : INITIAL_USERS;
     }
 
     function saveLocalUsers(users) {
-      localStorage.setItem("culdesac_walking_users_v6", JSON.stringify(users));
+      localStorage.setItem("culdesac_walking_users_v7", JSON.stringify(users));
     }
 
     async function syncFromCloud() {
@@ -432,12 +567,10 @@
             currentUsers = cloudUsers;
             saveLocalUsers(cloudUsers);
             renderApp(currentUsers);
-            const liveBadge = document.getElementById("live-sync-indicator");
-            if (liveBadge) liveBadge.innerText = "🟢 Live Synced";
           }
         }
       } catch (err) {
-        console.warn("Cloud sync offline, using local cache:", err);
+        console.warn("Using local cache:", err);
       }
     }
 
@@ -451,36 +584,6 @@
       const users = [...(usersToRender || currentUsers)];
       users.sort((a, b) => b.steps - a.steps);
 
-      // 1. Render Podium (Top 3)
-      const podium = document.getElementById("podium-display");
-      if (users.length >= 3) {
-        const first = users[0];
-        const second = users[1];
-        const third = users[2];
-
-        podium.innerHTML = `
-          <div class="podium-item">
-            <div class="podium-medal">🥈 2nd</div>
-            <div class="podium-avatar">${second.avatar}</div>
-            <div class="podium-name">${second.name}</div>
-            <div class="podium-steps">${second.steps.toLocaleString()}</div>
-          </div>
-          <div class="podium-item first">
-            <div class="podium-medal">🥇 1st Place</div>
-            <div class="podium-avatar">${first.avatar}</div>
-            <div class="podium-name">${first.name} ${first.name === 'Marcus' ? '👑' : ''}</div>
-            <div class="podium-steps" style="color:#f59e0b; font-weight:700;">${first.steps.toLocaleString()} Steps</div>
-          </div>
-          <div class="podium-item">
-            <div class="podium-medal">🥉 3rd</div>
-            <div class="podium-avatar">${third.avatar}</div>
-            <div class="podium-name">${third.name}</div>
-            <div class="podium-steps">${third.steps.toLocaleString()}</div>
-          </div>
-        `;
-      }
-
-      // 2. Render Full List
       const container = document.getElementById("leaderboard-list");
       container.innerHTML = "";
       let totalSteps = 0;
@@ -496,8 +599,8 @@
           <div class="rank-num">${rankMedal}</div>
           <div class="avatar">${u.avatar}</div>
           <div class="user-info">
-            <div class="user-name">${u.name} ${u.name === 'Marcus' ? '👑' : ''}</div>
-            <div class="user-sub">${miles} miles • 🔥 ${u.streak}d streak</div>
+            <div class="user-name">${u.name}</div>
+            <div class="user-persona">${u.persona || 'Flamingo'} • ${miles} miles</div>
           </div>
           <div class="score-block">
             <div class="score-steps">${u.steps.toLocaleString()}</div>
@@ -507,13 +610,12 @@
         container.appendChild(row);
       });
 
-      // 3. Milestone Goal
       document.getElementById("total-community-steps").innerText = totalSteps.toLocaleString() + " Steps";
       const goal = 350000;
       const pct = Math.min(100, Math.round((totalSteps / goal) * 100));
       document.getElementById("community-bar").style.width = pct + "%";
       document.getElementById("pct-goal").innerText = pct + "% of Goal";
-      document.getElementById("active-walkers-count").innerText = users.filter(u => u.steps > 0).length + " Walkers Active";
+      document.getElementById("active-walkers-count").innerText = users.filter(u => u.steps > 0).length + " Flamingos in the Flock";
     }
 
     async function submitSteps() {
@@ -526,7 +628,6 @@
         return;
       }
 
-      // Fetch latest from cloud first to avoid overwriting another neighbor's walk
       try {
         const res = await fetch(FIREBASE_DB_URL);
         if (res.ok) {
@@ -538,13 +639,14 @@
       const user = currentUsers.find(u => u.name === name);
       if (user) {
         user.steps += stepsToAdd;
-        user.streak += 1;
+        user.streak = (user.streak || 0) + 1;
         saveLocalUsers(currentUsers);
         renderApp(currentUsers);
         input.value = "";
 
+        const cheer = RICHMOND_CHEERS[Math.floor(Math.random() * RICHMOND_CHEERS.length)];
         const toast = document.getElementById("toast");
-        toast.innerText = `🎉 Added ${stepsToAdd.toLocaleString()} steps for ${name}! Syncing...`;
+        toast.innerText = `🎉 Added ${stepsToAdd.toLocaleString()} steps for ${name}! ${cheer}`;
         toast.classList.add("show");
 
         try {
@@ -553,7 +655,6 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(currentUsers)
           });
-          toast.innerText = `🎉 Added ${stepsToAdd.toLocaleString()} steps for ${name}! Synced live to cul-de-sac!`;
         } catch (err) {
           console.error("Save error:", err);
         }
@@ -562,18 +663,44 @@
       }
     }
 
-    // Initialize with local cache first for instant display
+        function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+        setTimeout(() => {
+          confetti({ particleCount: 80, angle: 60, spread: 60, origin: { x: 0 } });
+          confetti({ particleCount: 80, angle: 120, spread: 60, origin: { x: 1 } });
+        }, 300);
+        setTimeout(() => {
+          confetti({ particleCount: 100, spread: 100, origin: { y: 0.5 } });
+        }, 700);
+      }
+    }
+
+    function openCelebration() {
+      document.getElementById("celebration-modal").classList.add("active");
+      triggerConfetti();
+    }
+
+    function closeCelebration() {
+      document.getElementById("celebration-modal").classList.remove("active");
+      localStorage.setItem("seen_celebration_week2_official", "true");
+    }
+
+    function checkSundayCelebration() {
+      const seen = localStorage.getItem("seen_celebration_week2_official");
+      const today = new Date();
+      if (!seen) {
+        document.getElementById("celebration-modal").classList.add("active");
+        triggerConfetti();
+      }
+    }
+
     currentUsers = getLocalUsers();
     renderApp(currentUsers);
-
-    // Then pull live cloud data
     syncFromCloud();
-
-    // Auto-sync every 15 seconds so live walks appear without manual refresh
     setInterval(syncFromCloud, 15000);
-
-    // Also sync whenever the user switches back to this tab
     window.addEventListener("focus", syncFromCloud);
+    setTimeout(checkSundayCelebration, 400);
   </script>
 </body>
 </html>
