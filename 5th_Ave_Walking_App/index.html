@@ -67,19 +67,22 @@
       align-items: center;
     }
     .mascot-avatar {
-      width: 90px;
-      height: 95px;
+      width: 95px;
+      height: 100px;
       flex-shrink: 0;
-      border-radius: 50%;
-      border: 3px solid var(--gold);
-      background: #1e293b;
-      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25);
-      overflow: hidden;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .mascot-avatar img {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.3));
     }
     .dispatch-content { flex: 1; }
     .dispatch-tag {
@@ -341,16 +344,23 @@
       position: relative;
     }
     .cel-avatar {
-      width: 120px;
-      height: 125px;
+      width: 130px;
+      height: 135px;
       margin: 0 auto 12px;
-      border-radius: 50%;
-      border: 4px solid var(--gold);
-      background: #1e293b;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .cel-avatar img { width: 100%; height: 100%; object-fit: contain; }
+    .cel-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 24px rgba(245, 158, 11, 0.35));
+    }
     .cel-tag {
       display: inline-block;
       font-size: 11px;
