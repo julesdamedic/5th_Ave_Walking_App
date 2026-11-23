@@ -729,6 +729,7 @@
 
       const user = currentUsers.find(u => u.name === name);
       if (user) {
+        playSparkleSound();
         user.steps += stepsToAdd;
         user.streak = (user.streak || 0) + 1;
         saveLocalUsers(currentUsers);
