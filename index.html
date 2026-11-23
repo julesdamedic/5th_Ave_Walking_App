@@ -704,8 +704,18 @@
       }
     }
 
+    const cheerAudio = new Audio('cheer.mp3');
+    function playCheerSound() {
+      try {
+        cheerAudio.currentTime = 0;
+        cheerAudio.play().catch(e => console.log('Audio error:', e));
+      } catch (err) {
+        console.log('Audio error:', err);
+      }
+    }
+
     function cycleTinnyRoseCheer() {
-      playSpringBoingSound();
+      playCheerSound();
       const cheer = RICHMOND_CHEERS[Math.floor(Math.random() * RICHMOND_CHEERS.length)];
       const bubble = document.getElementById("mascot-speech");
       if (bubble) {
