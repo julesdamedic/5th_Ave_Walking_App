@@ -448,6 +448,9 @@
       <div class="dispatch-bubble" id="mascot-speech">
         “River City strides! 5th Ave is moving today—<span>every single step lifts the flock closer to our goal!</span>”
       </div>
+    <div style="text-align: center; margin-top: 10px;">
+        <button type="button" onclick="openCelebration()" style="background: rgba(245, 158, 11, 0.2); border: 1px solid var(--gold); color: var(--gold); font-size: 11px; font-weight: 800; padding: 6px 14px; border-radius: 999px; cursor: pointer;">🏆 REPLAY WEEK 2 WINNERS & CONFETTI 🎉</button>
+      </div>
     </div>
   </div>
 
@@ -660,23 +663,31 @@
       }
     }
 
-    function triggerConfetti() {
+        function triggerConfetti() {
       if (typeof confetti === 'function') {
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
         setTimeout(() => {
-          confetti({ particleCount: 50, angle: 60, spread: 55, origin: { x: 0 } });
-          confetti({ particleCount: 50, angle: 120, spread: 55, origin: { x: 1 } });
-        }, 250);
+          confetti({ particleCount: 80, angle: 60, spread: 60, origin: { x: 0 } });
+          confetti({ particleCount: 80, angle: 120, spread: 60, origin: { x: 1 } });
+        }, 300);
+        setTimeout(() => {
+          confetti({ particleCount: 100, spread: 100, origin: { y: 0.5 } });
+        }, 700);
       }
+    }
+
+    function openCelebration() {
+      document.getElementById("celebration-modal").classList.add("active");
+      triggerConfetti();
     }
 
     function closeCelebration() {
       document.getElementById("celebration-modal").classList.remove("active");
-      localStorage.setItem("seen_week2_celebration", "true");
+      localStorage.setItem("seen_celebration_week2_official", "true");
     }
 
     function checkSundayCelebration() {
-      const seen = localStorage.getItem("seen_week2_celebration");
+      const seen = localStorage.getItem("seen_celebration_week2_official");
       const today = new Date();
       if (!seen) {
         document.getElementById("celebration-modal").classList.add("active");
@@ -689,7 +700,7 @@
     syncFromCloud();
     setInterval(syncFromCloud, 15000);
     window.addEventListener("focus", syncFromCloud);
-    checkSundayCelebration();
+    setTimeout(checkSundayCelebration, 400);
   </script>
 </body>
 </html>
