@@ -704,42 +704,38 @@
       }
     }
 
-    const cheerAudio = new Audio('cheer.mp3');
     const honkAudio = new Audio('honk.mp3');
+    honkAudio.preload = 'auto';
+
+    // Unlock / buffer audio on first touch
+    document.addEventListener('touchstart', () => { honkAudio.load(); }, { once: true });
+    document.addEventListener('click', () => { honkAudio.load(); }, { once: true });
+
+    const TINNYROSE_QUOTES = [
+      "HONK! 🦩 Madam TinnyRose has spoken from the grill!",
+      "HONK! 🦩 River City strides! Keep the flock moving today!",
+      "HONK! 🦩 58,000 steps at 3308? Madam TinnyRose approves!",
+      "HONK! 🦩 Crisp Richmond air and fresh strides—perfection!",
+      "HONK! 🦩 Every single step lifts the flock closer to our community goal!",
+      "HONK! 🦩 Another walk in the books for the Flamboyance!"
+    ];
 
     function cycleTinnyRoseCheer() {
+      try {
+        honkAudio.currentTime = 0;
+        const p = honkAudio.play();
+        if (p !== undefined) {
+          p.catch(err => console.log('Audio playback prevented:', err));
+        }
+      } catch (err) {
+        console.log('Honk error:', err);
+      }
+
+      const quote = TINNYROSE_QUOTES[Math.floor(Math.random() * TINNYROSE_QUOTES.length)];
       const bubble = document.getElementById("mascot-speech");
-      // 1-in-4 chance (25%) for rare authentic Flamingo HONK!
-      const isHonk = Math.random() < 0.25;
-
-      if (isHonk) {
-        try {
-          honkAudio.currentTime = 0;
-          honkAudio.play().catch(e => console.log('Honk error:', e));
-        } catch (err) {}
-
-        const honkQuotes = [
-          "HONK! 🦩 Madam TinnyRose has spoken from the grill!",
-          "HONK! 🦩 River City strides! Keep the flock moving!",
-          "HONK! 🦩 58,000 steps at 3308? Madam TinnyRose approves!",
-          "*Aggressive flamingo honk* 🦩 More steps today, 5th Ave!"
-        ];
-        const hQuote = honkQuotes[Math.floor(Math.random() * honkQuotes.length)];
-        if (bubble) {
-          bubble.innerHTML = `“${hQuote}”`;
-          localStorage.setItem("last_tinnyrose_speech", bubble.innerHTML);
-        }
-      } else {
-        try {
-          cheerAudio.currentTime = 0;
-          cheerAudio.play().catch(e => console.log('Cheer error:', e));
-        } catch (err) {}
-
-        const cheer = RICHMOND_CHEERS[Math.floor(Math.random() * RICHMOND_CHEERS.length)];
-        if (bubble) {
-          bubble.innerHTML = `“${cheer}”`;
-          localStorage.setItem("last_tinnyrose_speech", bubble.innerHTML);
-        }
+      if (bubble) {
+        bubble.innerHTML = `“${quote}”`;
+        localStorage.setItem("last_tinnyrose_speech", bubble.innerHTML);
       }
     }
 
