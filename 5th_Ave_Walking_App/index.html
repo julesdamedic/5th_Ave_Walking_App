@@ -580,6 +580,23 @@
       input.value = current + val;
     }
 
+    const FLAMINGO_MAP = {
+      "Hannah": { persona: "Speedy Flamingo", avatar: "⚡" },
+      "May": { persona: "Fiery Flamingo", avatar: "🔥" },
+      "Lula": { persona: "Sunny Flamingo", avatar: "🌺" },
+      "Scott": { persona: "Cool Flamingo", avatar: "🕶️" },
+      "Eboni": { persona: "Sparkle Flamingo", avatar: "✨" },
+      "Marcus": { persona: "Royal Flamingo", avatar: "👑" },
+      "Julie": { persona: "Champion Flamingo", avatar: "🏆" },
+      "Kelly": { persona: "Star Flamingo", avatar: "⭐" },
+      "Tre": { persona: "Power Flamingo", avatar: "💪" },
+      "Dae": { persona: "Rocket Flamingo", avatar: "🚀" },
+      "Nicolle": { persona: "Bloom Flamingo", avatar: "🌸" },
+      "Jan": { persona: "Stride Flamingo", avatar: "🏃" },
+      "Dominque": { persona: "Target Flamingo", avatar: "🎯" },
+      "Robin": { persona: "Garden Flamingo", avatar: "🌿" }
+    };
+
     function renderApp(usersToRender) {
       const users = [...(usersToRender || currentUsers)];
       users.sort((a, b) => b.steps - a.steps);
@@ -597,10 +614,10 @@
         row.className = "leaderboard-item";
         row.innerHTML = `
           <div class="rank-num">${rankMedal}</div>
-          <div class="avatar">${u.avatar}</div>
+          <div class="avatar">${(FLAMINGO_MAP[u.name] ? FLAMINGO_MAP[u.name].avatar : u.avatar) || "🦩"}</div>
           <div class="user-info">
             <div class="user-name">${u.name}</div>
-            <div class="user-persona">${u.persona || 'Flamingo'} • ${miles} miles</div>
+            <div class="user-persona">${u.persona || (FLAMINGO_MAP[u.name] ? FLAMINGO_MAP[u.name].persona : "Flamingo")} • ${miles} miles</div>
           </div>
           <div class="score-block">
             <div class="score-steps">${u.steps.toLocaleString()}</div>
