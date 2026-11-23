@@ -439,7 +439,7 @@
   </header>
 
   <div class="dispatch-card">
-    <div class="mascot-avatar">
+    <div class="mascot-avatar" onclick="cycleTinnyRoseCheer()" style="cursor: pointer;" title="Tap for a cheer!">
       <img src="madam_tinnyrose_wearing_kicks.png" alt="Madam TinnyRose">
     </div>
     <div class="dispatch-content">
@@ -597,6 +597,23 @@
       "Robin": { persona: "Garden Flamingo", avatar: "🌿" }
     };
 
+        function cycleTinnyRoseCheer() {
+      const cheer = RICHMOND_CHEERS[Math.floor(Math.random() * RICHMOND_CHEERS.length)];
+      const bubble = document.getElementById("mascot-speech");
+      if (bubble) {
+        bubble.innerHTML = `“${cheer}”`;
+        localStorage.setItem("last_tinnyrose_speech", bubble.innerHTML);
+      }
+    }
+
+    function restoreLastSpeech() {
+      const saved = localStorage.getItem("last_tinnyrose_speech");
+      if (saved) {
+        const bubble = document.getElementById("mascot-speech");
+        if (bubble) bubble.innerHTML = saved;
+      }
+    }
+
     function renderApp(usersToRender) {
       const users = [...(usersToRender || currentUsers)];
       users.sort((a, b) => b.steps - a.steps);
@@ -668,6 +685,7 @@
         const bubble = document.getElementById("mascot-speech");
         if (bubble) {
           bubble.innerHTML = `“<span>${name}</span> just logged ${stepsToAdd.toLocaleString()} steps! ${cheer}”`;
+          localStorage.setItem("last_tinnyrose_speech", bubble.innerHTML);
         }
 
         try {
