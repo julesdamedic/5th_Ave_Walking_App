@@ -705,22 +705,41 @@
     }
 
     const cheerAudio = new Audio('cheer.mp3');
-    function playCheerSound() {
-      try {
-        cheerAudio.currentTime = 0;
-        cheerAudio.play().catch(e => console.log('Audio error:', e));
-      } catch (err) {
-        console.log('Audio error:', err);
-      }
-    }
+    const honkAudio = new Audio('honk.mp3');
 
     function cycleTinnyRoseCheer() {
-      playCheerSound();
-      const cheer = RICHMOND_CHEERS[Math.floor(Math.random() * RICHMOND_CHEERS.length)];
       const bubble = document.getElementById("mascot-speech");
-      if (bubble) {
-        bubble.innerHTML = `“${cheer}”`;
-        localStorage.setItem("last_tinnyrose_speech", bubble.innerHTML);
+      // 1-in-4 chance (25%) for rare authentic Flamingo HONK!
+      const isHonk = Math.random() < 0.25;
+
+      if (isHonk) {
+        try {
+          honkAudio.currentTime = 0;
+          honkAudio.play().catch(e => console.log('Honk error:', e));
+        } catch (err) {}
+
+        const honkQuotes = [
+          "HONK! 🦩 Madam TinnyRose has spoken from the grill!",
+          "HONK! 🦩 River City strides! Keep the flock moving!",
+          "HONK! 🦩 58,000 steps at 3308? Madam TinnyRose approves!",
+          "*Aggressive flamingo honk* 🦩 More steps today, 5th Ave!"
+        ];
+        const hQuote = honkQuotes[Math.floor(Math.random() * honkQuotes.length)];
+        if (bubble) {
+          bubble.innerHTML = `“${hQuote}”`;
+          localStorage.setItem("last_tinnyrose_speech", bubble.innerHTML);
+        }
+      } else {
+        try {
+          cheerAudio.currentTime = 0;
+          cheerAudio.play().catch(e => console.log('Cheer error:', e));
+        } catch (err) {}
+
+        const cheer = RICHMOND_CHEERS[Math.floor(Math.random() * RICHMOND_CHEERS.length)];
+        if (bubble) {
+          bubble.innerHTML = `“${cheer}”`;
+          localStorage.setItem("last_tinnyrose_speech", bubble.innerHTML);
+        }
       }
     }
 
