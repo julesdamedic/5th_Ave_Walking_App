@@ -608,7 +608,53 @@
       "Robin": { persona: "Garden Flamingo", avatar: "🌿" }
     };
 
-        function cycleTinnyRoseCheer() {
+        let audioCtx = null;
+    function playSparkleSound() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        if (!audioCtx) audioCtx = new AudioContext();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+        // Sparkly power-up ascending arpeggio notes
+        const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+          
+          gain.gain.setValueAtTime(0, now + idx * 0.04);
+          gain.gain.linearRampToValueAtTime(0.12, now + idx * 0.04 + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.04 + 0.16);
+          
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          
+          osc.start(now + idx * 0.04);
+          osc.stop(now + idx * 0.04 + 0.18);
+        });
+
+        // Sparkle shimmer overtone at apex
+        const shimmer = audioCtx.createOscillator();
+        const sGain = audioCtx.createGain();
+        shimmer.type = 'triangle';
+        shimmer.frequency.setValueAtTime(2093.00, now + 0.20);
+        sGain.gain.setValueAtTime(0.08, now + 0.20);
+        sGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
+        shimmer.connect(sGain);
+        sGain.connect(audioCtx.destination);
+        shimmer.start(now + 0.20);
+        shimmer.stop(now + 0.48);
+      } catch (err) {
+        console.log('Audio feedback unavailable:', err);
+      }
+    }
+
+    function cycleTinnyRoseCheer() {
+      playSparkleSound();
       const cheer = RICHMOND_CHEERS[Math.floor(Math.random() * RICHMOND_CHEERS.length)];
       const bubble = document.getElementById("mascot-speech");
       if (bubble) {
