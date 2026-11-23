@@ -665,6 +665,10 @@
         const toast = document.getElementById("toast");
         toast.innerText = `🎉 Added ${stepsToAdd.toLocaleString()} steps for ${name}! ${cheer}`;
         toast.classList.add("show");
+        const bubble = document.getElementById("mascot-speech");
+        if (bubble) {
+          bubble.innerHTML = `“<span>${name}</span> just logged ${stepsToAdd.toLocaleString()} steps! ${cheer}”`;
+        }
 
         try {
           await fetch(FIREBASE_DB_URL, {
