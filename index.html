@@ -653,8 +653,59 @@
       }
     }
 
+    function playSpringBoingSound() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        if (!audioCtx) audioCtx = new AudioContext();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+
+        // Cartoon spring boing: carrier triangle oscillator modulated by rapid pitch wobble
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'triangle'; // rich bouncy metallic spring tone
+        
+        // Pitch envelope: shoots up then wobbles (boiii-ing!)
+        osc.frequency.setValueAtTime(240, now);
+        osc.frequency.exponentialRampToValueAtTime(680, now + 0.08);
+        osc.frequency.exponentialRampToValueAtTime(360, now + 0.16);
+        osc.frequency.exponentialRampToValueAtTime(560, now + 0.24);
+        osc.frequency.exponentialRampToValueAtTime(420, now + 0.32);
+        osc.frequency.exponentialRampToValueAtTime(460, now + 0.40);
+
+        // Amplitude envelope: snappy spring attack, then bouncy ring-out
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.20, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.45);
+
+        // Subtle whimsical sparkle pop at the tail
+        const pop = audioCtx.createOscillator();
+        const popGain = audioCtx.createGain();
+        pop.type = 'sine';
+        pop.frequency.setValueAtTime(1760, now + 0.10);
+        popGain.gain.setValueAtTime(0, now + 0.10);
+        popGain.gain.linearRampToValueAtTime(0.08, now + 0.12);
+        popGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
+        pop.connect(popGain);
+        popGain.connect(audioCtx.destination);
+        pop.start(now + 0.10);
+        pop.stop(now + 0.34);
+      } catch (err) {
+        console.log('Audio feedback unavailable:', err);
+      }
+    }
+
     function cycleTinnyRoseCheer() {
-      playSparkleSound();
+      playSpringBoingSound();
       const cheer = RICHMOND_CHEERS[Math.floor(Math.random() * RICHMOND_CHEERS.length)];
       const bubble = document.getElementById("mascot-speech");
       if (bubble) {
